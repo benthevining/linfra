@@ -1,0 +1,101 @@
+{
+  "buildPresets": [
+    {
+      "configurePreset": "clang",
+      "displayName": "Clang (debug)",
+      "inherits": "base",
+      "name": "clang"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "Clang (release)",
+      "inherits": "clang",
+      "name": "clang-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": {
+          "type": "STRING",
+          "value": "clang++"
+        },
+        "CMAKE_C_COMPILER": {
+          "type": "STRING",
+          "value": "clang"
+        },
+        "CMAKE_OSX_ARCHITECTURES": {
+          "type": "STRING",
+          "value": "$env{CMAKE_APPLE_SILICON_PROCESSOR}"
+        }
+      },
+      "displayName": "Clang",
+      "generator": "Ninja Multi-Config",
+      "inherits": "base",
+      "name": "clang"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "configurePreset": "clang",
+      "displayName": "Clang",
+      "inherits": "base",
+      "name": "clang"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "clang",
+      "displayName": "Clang (debug)",
+      "inherits": "base",
+      "name": "clang"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "Clang (release)",
+      "inherits": "clang",
+      "name": "clang-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "Clang",
+      "name": "clang",
+      "steps": [
+        {
+          "name": "clang",
+          "type": "configure"
+        },
+        {
+          "name": "clang",
+          "type": "build"
+        },
+        {
+          "name": "clang-r",
+          "type": "build"
+        },
+        {
+          "name": "clang",
+          "type": "test"
+        },
+        {
+          "name": "clang-r",
+          "type": "test"
+        },
+        {
+          "name": "clang",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "buildPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configurePreset": "iOS",
+      "displayName": "iOS (simulator - debug)",
+      "inherits": "base",
+      "name": "iOS",
+      "nativeToolOptions": [
+        "-sdk",
+        "iphonesimulator"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "iOS (simulator - release)",
+      "inherits": "iOS",
+      "name": "iOS-r"
+    },
+    {
+      "displayName": "iOS (device - debug)",
+      "inherits": "iOS",
+      "name": "iOS-dev",
+      "nativeToolOptions": [
+        "-sdk",
+        "iphoneos"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "iOS (device - release)",
+      "inherits": "iOS-dev",
+      "name": "iOS-dev-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CROSSCOMPILING_EMULATOR": {
+          "type": "STRING",
+          "value": "${fileDir}/../test-ios.sh;$env{IOS_SIMULATOR_DEVICE_ID}"
+        },
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "iOS"
+        },
+        "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
+          "type": "STRING",
+          "value": "-iphonesimulator"
+        },
+        "IOS": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "description": "Note that you should define the IOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
+      "displayName": "iOS",
+      "generator": "Xcode",
+      "inherits": "base",
+      "name": "iOS"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configurePreset": "iOS",
+      "displayName": "iOS",
+      "inherits": "base",
+      "name": "iOS"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "iOS",
+      "displayName": "iOS (simulator - debug)",
+      "inherits": "base",
+      "name": "iOS"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "iOS (simulator - release)",
+      "inherits": "iOS",
+      "name": "iOS-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "iOS",
+      "name": "iOS",
+      "steps": [
+        {
+          "name": "iOS",
+          "type": "configure"
+        },
+        {
+          "name": "iOS",
+          "type": "build"
+        },
+        {
+          "name": "iOS-r",
+          "type": "build"
+        },
+        {
+          "name": "iOS-dev",
+          "type": "build"
+        },
+        {
+          "name": "iOS-dev-r",
+          "type": "build"
+        },
+        {
+          "name": "iOS",
+          "type": "test"
+        },
+        {
+          "name": "iOS-r",
+          "type": "test"
+        },
+        {
+          "name": "iOS",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

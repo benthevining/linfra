@@ -1,0 +1,101 @@
+{
+  "buildPresets": [
+    {
+      "configurePreset": "android",
+      "displayName": "Android (debug)",
+      "inherits": "base",
+      "name": "android"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "Android (release)",
+      "inherits": "android",
+      "name": "android-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_ANDROID_STL_TYPE": {
+          "type": "STRING",
+          "value": "c++_static"
+        },
+        "CMAKE_CROSSCOMPILING_EMULATOR": {
+          "type": "STRING",
+          "value": "${fileDir}/../test-android.sh;$env{ANDROID_SDK_ROOT};$env{ANDROID_SIMULATOR_AVD}"
+        },
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "Android"
+        }
+      },
+      "description": "Note that you should set the environment variables ANDROID_NDK_ROOT, ANDROID_SDK_ROOT, and ANDROID_SIMULATOR_AVD when using this preset.",
+      "displayName": "Android",
+      "inherits": "base",
+      "name": "android"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "configurePreset": "android",
+      "displayName": "Android",
+      "inherits": "base",
+      "name": "android"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "android",
+      "displayName": "Android (debug)",
+      "inherits": "base",
+      "name": "android"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "Android (release)",
+      "inherits": "android",
+      "name": "android-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "Android",
+      "name": "android",
+      "steps": [
+        {
+          "name": "android",
+          "type": "configure"
+        },
+        {
+          "name": "android",
+          "type": "build"
+        },
+        {
+          "name": "android-r",
+          "type": "build"
+        },
+        {
+          "name": "android",
+          "type": "test"
+        },
+        {
+          "name": "android-r",
+          "type": "test"
+        },
+        {
+          "name": "android",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# ======================================================================================
+#  __    ____  __  __  ____  ___
+# (  )  (_  _)(  \/  )( ___)/ __)
+#  )(__  _)(_  )    (  )__) \__ \
+# (____)(____)(_/\/\_)(____)(___/
+#
+#  This file is part of the Limes open source library and is licensed under the terms of the GNU Public License.
+#
+#  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
+#
+# ======================================================================================
+
+# configuration file for the gitlint tool, which is run by pre-commit: https://jorisroovers.com/gitlint/
+# The most important part is that commit messages must follow the
+# conventional commits specification: https://www.conventionalcommits.org/en/v1.0.0/
+# Valid commit categories are listed under the contrib-title-conventional-commits key
+
+[general]
+
+ignore = title-trailing-punctuation, body-is-missing
+
+fail-without-commits = true
+
+contrib = contrib-title-conventional-commits
+
+verbosity = 2
+
+ignore-merge-commits = false
+ignore-revert-commits = false
+ignore-fixup-commits = false
+ignore-squash-commits = false
+
+[title-max-length]
+line-length = 200
+
+[title-min-length]
+min-length = 10
+
+[body-max-line-length]
+line-length = 250
+
+[contrib-title-conventional-commits]
+types = fix, feat, chore, docs, style, refactor, test, ci

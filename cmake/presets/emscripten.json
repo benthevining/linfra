@@ -1,0 +1,95 @@
+{
+  "buildPresets": [
+    {
+      "configurePreset": "emscripten",
+      "displayName": "WebAssembly (debug)",
+      "inherits": "base",
+      "name": "emscripten"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "WebAssembly (release)",
+      "inherits": "emscripten",
+      "name": "emscripten-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "EMSCRIPTEN": {
+          "type": "BOOL",
+          "value": true
+        }
+      },
+      "description": "Note that you must set the environment variable EMSCRIPTEN_ROOT to the path of your Emscripten SDK installation. You can find this by running which emcc (Unix) or where emcc (Windows)",
+      "displayName": "Emscripten",
+      "generator": "Ninja Multi-Config",
+      "inherits": "base",
+      "name": "emscripten",
+      "toolchainFile": "$env{EMSCRIPTEN_ROOT}/cmake/Modules/Platform/Emscripten.cmake"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "configurePreset": "emscripten",
+      "displayName": "WebAssembly",
+      "inherits": "base",
+      "name": "emscripten"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "emscripten",
+      "displayName": "WebAssembly (debug)",
+      "inherits": "base",
+      "name": "emscripten"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "WebAssembly (release)",
+      "inherits": "emscripten",
+      "name": "emscripten-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "WebAssembly",
+      "name": "emscripten",
+      "steps": [
+        {
+          "name": "emscripten",
+          "type": "configure"
+        },
+        {
+          "name": "emscripten",
+          "type": "build"
+        },
+        {
+          "name": "emscripten-r",
+          "type": "build"
+        },
+        {
+          "name": "emscripten",
+          "type": "test"
+        },
+        {
+          "name": "emscripten-r",
+          "type": "test"
+        },
+        {
+          "name": "emscripten",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

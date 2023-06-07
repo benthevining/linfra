@@ -1,0 +1,128 @@
+{
+  "buildPresets": [
+    {
+      "configurePreset": "watchOS",
+      "displayName": "watchOS (simulator - debug)",
+      "inherits": "iOS",
+      "name": "watchOS",
+      "nativeToolOptions": [
+        "-sdk",
+        "watchsimulator"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "watchOS (simulator - release)",
+      "inherits": "watchOS",
+      "name": "watchOS-r"
+    },
+    {
+      "displayName": "watchOS (device - debug)",
+      "inherits": "watchOS",
+      "name": "watchOS-dev",
+      "nativeToolOptions": [
+        "-sdk",
+        "watchos"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "watchOS (device - release)",
+      "inherits": "watchOS-dev",
+      "name": "watchOS-dev-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CROSSCOMPILING_EMULATOR": {
+          "type": "STRING",
+          "value": "${fileDir}/../test-ios.sh;$env{WATCHOS_SIMULATOR_DEVICE_ID}"
+        },
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "watchOS"
+        },
+        "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
+          "type": "STRING",
+          "value": "-watchsimulator"
+        }
+      },
+      "description": "Note that you should define the WATCHOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
+      "displayName": "watchOS",
+      "inherits": "iOS",
+      "name": "watchOS"
+    }
+  ],
+  "include": [
+    "ios.json"
+  ],
+  "packagePresets": [
+    {
+      "configurePreset": "watchOS",
+      "displayName": "watchOS",
+      "inherits": "iOS",
+      "name": "watchOS"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "watchOS",
+      "displayName": "watchOS (simulator - debug)",
+      "inherits": "base",
+      "name": "watchOS"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "watchOS (simulator - release)",
+      "inherits": "watchOS",
+      "name": "watchOS-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "watchOS",
+      "name": "watchOS",
+      "steps": [
+        {
+          "name": "watchOS",
+          "type": "configure"
+        },
+        {
+          "name": "watchOS",
+          "type": "build"
+        },
+        {
+          "name": "watchOS-r",
+          "type": "build"
+        },
+        {
+          "name": "watchOS-dev",
+          "type": "build"
+        },
+        {
+          "name": "watchOS-dev-r",
+          "type": "build"
+        },
+        {
+          "name": "watchOS",
+          "type": "test"
+        },
+        {
+          "name": "watchOS-r",
+          "type": "test"
+        },
+        {
+          "name": "watchOS",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "buildPresets": [
+    {
+      "configurePreset": "tvOS",
+      "displayName": "tvOS (simulator - debug)",
+      "inherits": "iOS",
+      "name": "tvOS",
+      "nativeToolOptions": [
+        "-sdk",
+        "appletvsimulator"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "tvOS (simulator - release)",
+      "inherits": "tvOS",
+      "name": "tvOS-r"
+    },
+    {
+      "displayName": "tvOS (device - debug)",
+      "inherits": "tvOS",
+      "name": "tvOS-dev",
+      "nativeToolOptions": [
+        "-sdk",
+        "appletvos"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "tvOS (device - release)",
+      "inherits": "tvOS-dev",
+      "name": "tvOS-dev-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CROSSCOMPILING_EMULATOR": {
+          "type": "STRING",
+          "value": "${fileDir}/../test-ios.sh;$env{TVOS_SIMULATOR_DEVICE_ID}"
+        },
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "tvOS"
+        },
+        "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
+          "type": "STRING",
+          "value": "-appletvsimulator"
+        }
+      },
+      "description": "Note that you should define the TVOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
+      "displayName": "tvOS",
+      "inherits": "iOS",
+      "name": "tvOS"
+    }
+  ],
+  "include": [
+    "ios.json"
+  ],
+  "packagePresets": [
+    {
+      "configurePreset": "tvOS",
+      "displayName": "tvOS",
+      "inherits": "iOS",
+      "name": "tvOS"
+    }
+  ],
+  "testPresets": [
+    {
+      "configurePreset": "tvOS",
+      "displayName": "tvOS (simulator - debug)",
+      "inherits": "base",
+      "name": "tvOS"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "tvOS (simulator - release)",
+      "inherits": "tvOS",
+      "name": "tvOS-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "tvOS",
+      "name": "tvOS",
+      "steps": [
+        {
+          "name": "tvOS",
+          "type": "configure"
+        },
+        {
+          "name": "tvOS",
+          "type": "build"
+        },
+        {
+          "name": "tvOS-r",
+          "type": "build"
+        },
+        {
+          "name": "tvOS-dev",
+          "type": "build"
+        },
+        {
+          "name": "tvOS-dev-r",
+          "type": "build"
+        },
+        {
+          "name": "tvOS",
+          "type": "test"
+        },
+        {
+          "name": "tvOS-r",
+          "type": "test"
+        },
+        {
+          "name": "tvOS",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

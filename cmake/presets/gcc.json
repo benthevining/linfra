@@ -1,0 +1,121 @@
+{
+  "buildPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "notEquals"
+      },
+      "configurePreset": "gcc",
+      "displayName": "GCC (debug)",
+      "inherits": "base",
+      "name": "gcc"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "GCC (release)",
+      "inherits": "gcc",
+      "name": "gcc-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": {
+          "type": "STRING",
+          "value": "g++"
+        },
+        "CMAKE_C_COMPILER": {
+          "type": "STRING",
+          "value": "gcc"
+        },
+        "CMAKE_Fortran_COMPILER": {
+          "type": "STRING",
+          "value": "gfortran"
+        }
+      },
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "notEquals"
+      },
+      "displayName": "GCC",
+      "generator": "Ninja Multi-Config",
+      "inherits": "base",
+      "name": "gcc"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "notEquals"
+      },
+      "configurePreset": "gcc",
+      "displayName": "GCC",
+      "inherits": "base",
+      "name": "gcc"
+    }
+  ],
+  "testPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "notEquals"
+      },
+      "configurePreset": "gcc",
+      "displayName": "GCC (debug)",
+      "inherits": "base",
+      "name": "gcc"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "GCC (release)",
+      "inherits": "gcc",
+      "name": "gcc-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "GCC",
+      "name": "gcc",
+      "steps": [
+        {
+          "name": "gcc",
+          "type": "configure"
+        },
+        {
+          "name": "gcc",
+          "type": "build"
+        },
+        {
+          "name": "gcc-r",
+          "type": "build"
+        },
+        {
+          "name": "gcc",
+          "type": "test"
+        },
+        {
+          "name": "gcc-r",
+          "type": "test"
+        },
+        {
+          "name": "gcc",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

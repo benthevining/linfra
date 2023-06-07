@@ -1,0 +1,107 @@
+{
+  "buildPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configurePreset": "xcode",
+      "displayName": "XCode (debug)",
+      "inherits": "base",
+      "name": "xcode"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "XCode (release)",
+      "inherits": "xcode",
+      "name": "xcode-r"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "displayName": "XCode",
+      "generator": "Xcode",
+      "inherits": "base",
+      "name": "xcode"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configurePreset": "xcode",
+      "displayName": "XCode",
+      "inherits": "base",
+      "name": "xcode"
+    }
+  ],
+  "testPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configurePreset": "xcode",
+      "displayName": "XCode (debug)",
+      "inherits": "base",
+      "name": "xcode"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "XCode (release)",
+      "inherits": "xcode",
+      "name": "xcode-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "XCode",
+      "name": "xcode",
+      "steps": [
+        {
+          "name": "xcode",
+          "type": "configure"
+        },
+        {
+          "name": "xcode",
+          "type": "build"
+        },
+        {
+          "name": "xcode-r",
+          "type": "build"
+        },
+        {
+          "name": "xcode",
+          "type": "test"
+        },
+        {
+          "name": "xcode-r",
+          "type": "test"
+        },
+        {
+          "name": "xcode",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

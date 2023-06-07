@@ -1,0 +1,47 @@
+# ======================================================================================
+#  __    ____  __  __  ____  ___
+# (  )  (_  _)(  \/  )( ___)/ __)
+#  )(__  _)(_  )    (  )__) \__ \
+# (____)(____)(_/\/\_)(____)(___/
+#
+#  This file is part of the Limes open source library and is licensed under the terms of the GNU Public License.
+#
+#  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
+#
+# ======================================================================================
+
+* text=auto eol=lf encoding=utf-8 whitespace=blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=4
+
+# the default whitespace setting is to use tabs
+# these attributes define files that should use spaces for indentation
+[attr]space_indent   whitespace=blank-at-eol,tab-in-indent
+[attr]2_space_indent whitespace=blank-at-eol,tab-in-indent,tabwidth=2
+
+# In general, exporting a source archive should leave no trace that
+# Limes was ever a git repository. So we don't want to export any
+# git-related configuration files
+.git*             export-ignore
+.mailmap          export-ignore
+.github/          export-ignore
+
+# For conformance with .editorconfig
+LICENSE           space_indent
+CITATION.cff      2_space_indent
+*.yml             2_space_indent
+*.yaml            2_space_indent
+*.json            2_space_indent
+*.clang-*         2_space_indent
+
+.ecrc             text
+.gitconfig        text
+.gitlint          text
+.gitattributes    text
+.gitignore        text
+
+*.cpp             text diff=cpp
+*.h               text diff=cpp
+*.json            text
+*.m               text diff=objc
+*.mm              text diff=objc
+*.md              text diff=markdown
+*.txt             text

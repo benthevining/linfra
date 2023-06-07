@@ -1,0 +1,27 @@
+# ======================================================================================
+#  __    ____  __  __  ____  ___
+# (  )  (_  _)(  \/  )( ___)/ __)
+#  )(__  _)(_  )    (  )__) \__ \
+# (____)(____)(_/\/\_)(____)(___/
+#
+#  This file is part of the Limes open source library and is licensed under the terms of the GNU Public License.
+#
+#  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
+#
+# ======================================================================================
+
+# configuration for the asdf tool version manager: https://asdf-vm.com/
+# This tool is like direnv for programs, allowing you to enforce
+# always running a particular version of a command while in this
+# directory. Usage of asdf is not required, and this file can
+# also be used as reference for which programs and versions to
+# install to your development environment manually.
+# To install the asdf shims, run `asdf install`. Make sure you
+# follow their docs to get asdf hooked into your shell properly.
+
+cmake 3.25.0 3.24.0 system
+direnv 2.32.2 system
+emsdk 3.1.26 system
+git 2.36.1 system
+ninja 1.11.0 system
+pre-commit 2.20.0 system

@@ -1,0 +1,117 @@
+{
+  "buildPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "equals"
+      },
+      "configurePreset": "vs",
+      "displayName": "MSVC (debug)",
+      "inherits": "base",
+      "name": "vs",
+      "nativeToolOptions": [
+        "-flp1:logfile=${sourceDir}/logs/builds/Debug/errors.log;errorsonly",
+        "-flp2:logfile=${sourceDir}/logs/builds/Debug/warnings.log;warningsonly",
+        "-clp:PerformanceSummary;Summary"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "displayName": "MSVC (release)",
+      "inherits": "vs",
+      "name": "vs-r",
+      "nativeToolOptions": [
+        "-flp1:logfile=${sourceDir}/logs/builds/Release/errors.log;errorsonly",
+        "-flp2:logfile=${sourceDir}/logs/builds/Release/warnings.log;warningsonly",
+        "-clp:PerformanceSummary;Summary"
+      ]
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "equals"
+      },
+      "displayName": "MSVC",
+      "generator": "Visual Studio 17 2022",
+      "inherits": "base",
+      "name": "vs"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "packagePresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "equals"
+      },
+      "configurePreset": "vs",
+      "displayName": "MSVC",
+      "inherits": "base",
+      "name": "vs"
+    }
+  ],
+  "testPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows",
+        "type": "equals"
+      },
+      "configurePreset": "vs",
+      "displayName": "MSVC (debug)",
+      "inherits": "base",
+      "name": "vs"
+    },
+    {
+      "configuration": "Release",
+      "displayName": "MSVC (release)",
+      "inherits": "vs",
+      "name": "vs-r"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "MSVC",
+      "name": "vs",
+      "steps": [
+        {
+          "name": "vs",
+          "type": "configure"
+        },
+        {
+          "name": "vs",
+          "type": "build"
+        },
+        {
+          "name": "vs-r",
+          "type": "build"
+        },
+        {
+          "name": "vs",
+          "type": "test"
+        },
+        {
+          "name": "vs-r",
+          "type": "test"
+        },
+        {
+          "name": "vs",
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}

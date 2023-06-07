@@ -1,0 +1,78 @@
+{
+  "buildPresets": [
+    {
+      "cleanFirst": false,
+      "configuration": "Debug",
+      "hidden": true,
+      "jobs": 4,
+      "name": "base",
+      "verbose": true
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "binaryDir": "${sourceDir}/Builds/${presetName}",
+      "hidden": true,
+      "installDir": "${sourceDir}/Builds/deploy/${presetName}",
+      "name": "base",
+      "warnings": {
+        "deprecated": true,
+        "dev": true,
+        "uninitialized": false,
+        "unusedCli": false
+      }
+    }
+  ],
+  "packagePresets": [
+    {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "generators": [
+        "ZIP"
+      ],
+      "hidden": true,
+      "name": "base",
+      "packageDirectory": "${sourceDir}/deploy/${presetName}"
+    }
+  ],
+  "testPresets": [
+    {
+      "configuration": "Debug",
+      "execution": {
+        "enableFailover": true,
+        "jobs": 4,
+        "noTestsAction": "error",
+        "repeat": {
+          "count": 5,
+          "mode": "until-pass"
+        },
+        "scheduleRandom": true,
+        "stopOnFailure": false,
+        "timeout": 300
+      },
+      "filter": {
+        "include": {
+          "name": "^limes.+"
+        }
+      },
+      "hidden": true,
+      "name": "base",
+      "output": {
+        "labelSummary": true,
+        "outputJUnitFile": "${sourceDir}/logs/tests/junit/${presetName}.xml",
+        "outputLogFile": "${sourceDir}/logs/tests/${presetName}.log",
+        "outputOnFailure": true,
+        "shortProgress": true,
+        "testOutputTruncation": "middle"
+      }
+    }
+  ],
+  "version": 6
+}
