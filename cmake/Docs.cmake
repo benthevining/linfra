@@ -90,7 +90,6 @@ endif ()
 
 #[[
 	limes_add_docs_coverage (<docs-target>
-							[COVERAGE_TARGET <target>]
 							[SOURCE_DIR <path>]
 							[DOCS_OUTPUT_DIR <path>]
 							[OUT_FILE <path>])
@@ -101,13 +100,9 @@ function (limes_add_docs_coverage docsTarget)
 		return ()
 	endif ()
 
-	set (oneVal COVERAGE_TARGET OUT_FILE SOURCE_DIR DOCS_OUTPUT_DIR)
+	set (oneVal OUT_FILE SOURCE_DIR DOCS_OUTPUT_DIR)
 
 	cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
-
-	if(NOT LIMES_COVERAGE_TARGET)
-		set (LIMES_COVERAGE_TARGET "${docsTarget}_coverage")
-	endif()
 
 	if (NOT LIMES_DOCS_OUTPUT_DIR)
 		set (LIMES_DOCS_OUTPUT_DIR "${DOXYGEN_OUTPUT_DIRECTORY}")
@@ -125,7 +120,8 @@ function (limes_add_docs_coverage docsTarget)
 
 	# cmake-format: off
 	add_custom_command (
-		OUTPUT "${LIMES_OUT_FILE}"
+		TARGET "${docsTarget}" POST_BUILD
+		BYPRODUCTS "${LIMES_OUT_FILE}"
 		# write a plaintext file
 		COMMAND
 			"${PYTHON_PROGRAM}" -m coverxygen
@@ -143,10 +139,7 @@ function (limes_add_docs_coverage docsTarget)
 				--prefix "${LIMES_SOURCE_DIR}"
 				--output -
 		COMMENT "Running docs coverage report for target ${docsTarget}..."
-		DEPENDS "${docsTarget}"
 		VERBATIM USES_TERMINAL)
 	# cmake-format: on
-
-	add_custom_target ("${LIMES_COVERAGE_TARGET}" DEPENDS "${LIMES_OUT_FILE}")
 
 endfunction ()
