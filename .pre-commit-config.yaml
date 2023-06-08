@@ -10,7 +10,7 @@
 #
 # ======================================================================================
 
-# TODO: bash linter, script executable flag linter
+# TODO: bash linter
 
 # config file for pre-commit: https://pre-commit.com/
 #
@@ -110,6 +110,8 @@ repos:
   - id: check-added-large-files
     args: [--maxkb=64]
   - id: check-case-conflict
+  - id: check-executables-have-shebangs
+  - id: check-shebang-scripts-are-executable
   - id: check-json
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
