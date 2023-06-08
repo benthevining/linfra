@@ -107,6 +107,11 @@ repos:
   hooks:
   - id: beautysh
     args: [--tab]
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.9.0.5
+  hooks:
+  - id: shellcheck
+    args: [--color=always, --shell=bash]
 
 # General
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -186,8 +191,6 @@ repos:
 - repo: https://github.com/jumanjihouse/pre-commit-hooks.git
   rev: 3.0.0
   hooks:
-  - id: shellcheck
-    args: [--color=always, --shell=bash]
   - id: check-mailmap
   - id: git-check
 
