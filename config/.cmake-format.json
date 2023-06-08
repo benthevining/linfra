@@ -67,6 +67,17 @@
   },
   "parse": {
     "additional_commands": {
+      "limes_add_docs_coverage": {
+        "kwargs": {
+          "COVERAGE_TARGET": 1,
+          "DOCS_OUTPUT_DIR": 1,
+          "OUT_FILE": 1,
+          "SOURCE_DIR": 1
+        },
+        "pargs": {
+          "nargs": 1
+        }
+      },
       "limes_configure_app_bundle": {
         "kwargs": {
           "BUNDLE_ID": 1,

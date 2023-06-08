@@ -12,6 +12,8 @@
 
 include_guard (GLOBAL)
 
+#
+
 macro (limes_default_doxygen_settings)
 
 	find_package (Doxygen OPTIONAL_COMPONENTS dot)
@@ -48,5 +50,103 @@ macro (limes_default_doxygen_settings)
 	set (DOXYGEN_TEMPLATE_RELATIONS YES)
 	set (DOXYGEN_DOT_IMAGE_FORMAT svg)
 	set (DOXYGEN_INTERACTIVE_SVG YES)
+	set (DOXYGEN_GENERATE_XML YES)
 
 endmacro ()
+
+#
+
+# for some reason, this seems to be more robust than find_package(Python)
+find_program (PYTHON_PROGRAM NAMES python3 python DOC "Python interpreter executable")
+
+mark_as_advanced (PYTHON_PROGRAM)
+
+if (PYTHON_PROGRAM)
+	# check if coverxygen is installed
+	if (NOT DEFINED CACHE{COVERXYGEN_INSTALLED})
+		execute_process (
+			COMMAND "${PYTHON_PROGRAM}" -c "import coverxygen" RESULT_VARIABLE coverxygen_found
+			OUTPUT_VARIABLE output ERROR_VARIABLE error)
+
+		if (coverxygen_found EQUAL 0)
+			set (COVERXYGEN_INSTALLED ON CACHE INTERNAL
+											   "Whether the coverxygen Python module was found")
+		else ()
+			set (COVERXYGEN_INSTALLED OFF CACHE INTERNAL
+												"Whether the coverxygen Python module was found")
+		endif ()
+
+		message (CONFIGURE_LOG "coverxygen found: ${COVERXYGEN_INSTALLED}")
+	endif ()
+
+	if (NOT COVERXYGEN_INSTALLED)
+		message (WARNING "coverxygen not installed, can't set up docs coverage reports")
+	endif ()
+else ()
+	message (WARNING "Python not found, can't set up docs coverage reports")
+endif ()
+
+#
+
+#[[
+	limes_add_docs_coverage (<docs-target>
+							[COVERAGE_TARGET <target>]
+							[SOURCE_DIR <path>]
+							[DOCS_OUTPUT_DIR <path>]
+							[OUT_FILE <path>])
+]]
+function (limes_add_docs_coverage docsTarget)
+
+	if (NOT (PYTHON_PROGRAM AND COVERXYGEN_INSTALLED))
+		return ()
+	endif ()
+
+	set (oneVal COVERAGE_TARGET OUT_FILE SOURCE_DIR DOCS_OUTPUT_DIR)
+
+	cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
+
+	if(NOT LIMES_COVERAGE_TARGET)
+		set (LIMES_COVERAGE_TARGET "${docsTarget}_coverage")
+	endif()
+
+	if (NOT LIMES_DOCS_OUTPUT_DIR)
+		set (LIMES_DOCS_OUTPUT_DIR "${DOXYGEN_OUTPUT_DIRECTORY}")
+	endif ()
+
+	if (NOT LIMES_OUT_FILE)
+		set (LIMES_OUT_FILE "${LIMES_DOCS_OUTPUT_DIR}/coverage.txt")
+	endif ()
+
+	if (NOT LIMES_SOURCE_DIR)
+		set (LIMES_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../src")
+	endif ()
+
+	set (xml_dir "${LIMES_DOCS_OUTPUT_DIR}/xml")
+
+	# cmake-format: off
+	add_custom_command (
+		OUTPUT "${LIMES_OUT_FILE}"
+		# write a plaintext file
+		COMMAND
+			"${PYTHON_PROGRAM}" -m coverxygen
+				--xml-dir "${xml_dir}"
+				--src-dir "${LIMES_SOURCE_DIR}"
+				--format summary
+				--prefix "${LIMES_SOURCE_DIR}"
+				--output "${LIMES_OUT_FILE}"
+		# write to stdout
+		COMMAND
+			"${PYTHON_PROGRAM}" -m coverxygen
+				--xml-dir "${xml_dir}"
+				--src-dir "${LIMES_SOURCE_DIR}"
+				--format summary
+				--prefix "${LIMES_SOURCE_DIR}"
+				--output -
+		COMMENT "Running docs coverage report for target ${docsTarget}..."
+		DEPENDS "${docsTarget}"
+		VERBATIM USES_TERMINAL)
+	# cmake-format: on
+
+	add_custom_target ("${LIMES_COVERAGE_TARGET}" DEPENDS "${LIMES_OUT_FILE}")
+
+endfunction ()
