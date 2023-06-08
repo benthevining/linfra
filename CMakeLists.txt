@@ -1,12 +1,5 @@
 cmake_minimum_required (VERSION 3.25 FATAL_ERROR)
 
-project (
-	limes-infra
-	LANGUAGES NONE
-	DESCRIPTION "Common utilities used by Limes library repos"
-	HOMEPAGE_URL https://github.com/benthevining/linfra/
-	VERSION 0.0.1)
-
 #
 
 macro (limes_default_project_options)
@@ -124,15 +117,14 @@ macro (limes_get_catch2)
 endmacro ()
 
 #[[
-	limes_configure_test_target (<target>
-								 BUNDLE_ID <id>
-								 VERSION_MAJOR <majorVersion>
-								 FULL_VERSION <fullVersion>
-								 TEST_CATEGORY <category>)
+	limes_configure_app_bundle (<target>
+								BUNDLE_ID <id>
+								VERSION_MAJOR <majorVersion>
+								FULL_VERSION <fullVersion>)
 ]]
-function (limes_configure_test_target target)
+function (limes_configure_app_bundle target)
 
-	set (oneVal BUNDLE_ID VERSION_MAJOR FULL_VERSION TEST_CATEGORY)
+	set (oneVal BUNDLE_ID VERSION_MAJOR FULL_VERSION)
 
 	cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
 
@@ -150,9 +142,28 @@ function (limes_configure_test_target target)
 				   MACOSX_BUNDLE_LONG_VERSION_STRING "${LIMES_FULL_VERSION}"
 				   MACOSX_BUNDLE_SHORT_VERSION_STRING "${LIMES_VERSION_MAJOR}")
 
-	target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
-
 	lfilesystem_copy_dlls ("${target}")
+
+endfunction ()
+
+#[[
+	limes_configure_test_target (<target>
+								 BUNDLE_ID <id>
+								 VERSION_MAJOR <majorVersion>
+								 FULL_VERSION <fullVersion>
+								 TEST_CATEGORY <category>)
+]]
+function (limes_configure_test_target target)
+
+	set (oneVal BUNDLE_ID VERSION_MAJOR FULL_VERSION TEST_CATEGORY)
+
+	cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
+
+	limes_configure_app_bundle (
+		"${target}" BUNDLE_ID "${LIMES_BUNDLE_ID}" VERSION_MAJOR "${LIMES_VERSION_MAJOR}"
+		FULL_VERSION "${LIMES_FULL_VERSION}")
+
+	target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 
 	# cmake-format: off
 	catch_discover_tests (
@@ -163,5 +174,26 @@ function (limes_configure_test_target target)
 			--verbosity high
 		TEST_PREFIX "limes.${LIMES_TEST_CATEGORY}.unit.")
 	# cmake-format: on
+
+endfunction ()
+
+#[[
+	limes_configure_benchmark_target (<executableTarget>
+									  BENCH_TARGET <targetName>
+									  LIB_NAME <library>)
+]]
+function (limes_configure_benchmark_target target)
+
+	set (oneVal BENCH_TARGET LIB_NAME)
+
+	cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
+
+	target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
+
+	limes_copy_dlls ("${target}")
+
+	add_custom_target (
+		"${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" --order rand --verbosity high
+		COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL)
 
 endfunction ()

@@ -67,6 +67,25 @@
   },
   "parse": {
     "additional_commands": {
+      "limes_configure_app_bundle": {
+        "kwargs": {
+          "BUNDLE_ID": 1,
+          "FULL_VERSION": 1,
+          "VERSION_MAJOR": 1
+        },
+        "pargs": {
+          "nargs": 1
+        }
+      },
+      "limes_configure_benchmark_target": {
+        "kwargs": {
+          "BENCH_TARGET": 1,
+          "LIB_NAME": 1
+        },
+        "pargs": {
+          "nargs": 1
+        }
+      },
       "limes_configure_test_target": {
         "kwargs": {
           "BUNDLE_ID": 1,
