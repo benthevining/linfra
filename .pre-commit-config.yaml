@@ -10,8 +10,6 @@
 #
 # ======================================================================================
 
-# TODO: bash linter
-
 # config file for pre-commit: https://pre-commit.com/
 #
 # These plugins are run before each git commit, but can also be run on demand using:
@@ -103,6 +101,13 @@ repos:
     args: [--config-files, config/.cmake-format.json, --disabled-codes, E1120]
     log_file: logs/pre-commit/cmake-lint.log
 
+# Bash formatting & linting
+- repo: https://github.com/lovesegfault/beautysh
+  rev: v6.2.1
+  hooks:
+  - id: beautysh
+    args: [--tab]
+
 # General
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
@@ -181,6 +186,8 @@ repos:
 - repo: https://github.com/jumanjihouse/pre-commit-hooks.git
   rev: 3.0.0
   hooks:
+  - id: shellcheck
+    args: [--color=always, --shell=bash]
   - id: check-mailmap
   - id: git-check
 

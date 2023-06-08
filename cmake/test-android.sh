@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# @formatter:off
 # ======================================================================================
 #  __    ____  __  __  ____  ___
 # (  )  (_  _)(  \/  )( ___)/ __)
@@ -11,7 +12,8 @@
 #  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
 #
 # ======================================================================================
-
+# @formatter:on
+#
 # usage: test-android.sh <sdk-root-path> <avd-name> <executable> [<args...>]
 
 # TODO: forward args to app
@@ -26,7 +28,7 @@ fi
 readonly ANDROID_SDK_ROOT
 
 if [ ! -d "$ANDROID_SDK_ROOT" ]; then
-	echo Android SDK does not exist at path: '$ANDROID_SDK_ROOT'
+	echo Android SDK does not exist at path: "$ANDROID_SDK_ROOT"
 	exit 1
 fi
 
@@ -40,7 +42,7 @@ APP_PATH="$3"
 readonly APP_PATH
 
 if [ ! -f "$APP_PATH" ]; then
-	echo App does not exist at path '$APP_PATH'!
+	echo App does not exist at path "$APP_PATH"!
 	exit 1
 fi
 

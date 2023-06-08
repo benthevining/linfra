@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# @formatter:off
 # ======================================================================================
 #  __    ____  __  __  ____  ___
 # (  )  (_  _)(  \/  )( ___)/ __)
@@ -11,12 +12,13 @@
 #  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
 #
 # ======================================================================================
+# @formatter:on
 
 set -euxo pipefail
 
 # ANDROID_SDK_ROOT should be set.
 if [ ! -d "$ANDROID_SDK_ROOT" ]; then
-	echo Android SDK not found at path '$ANDROID_SDK_ROOT'
+	echo Android SDK not found at path "$ANDROID_SDK_ROOT"
 	echo Make sure that the ANDROID_SDK_ROOT variable is set!
 	exit 1
 fi
@@ -51,7 +53,7 @@ TOOLS_DIR="$ANDROID_SDK_ROOT/tools/bin"
 readonly TOOLS_DIR
 
 if [ ! -d "$TOOLS_DIR" ]; then
-	echo Tools directory not found at path '$TOOLS_DIR'
+	echo Tools directory not found at path "$TOOLS_DIR"
 	exit 1
 fi
 

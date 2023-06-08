@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# @formatter:off
 # ======================================================================================
 #  __    ____  __  __  ____  ___
 # (  )  (_  _)(  \/  )( ___)/ __)
@@ -11,6 +12,7 @@
 #  Commercial licenses are available; contact the maintainers at ben.the.vining@gmail.com to inquire for details.
 #
 # ======================================================================================
+# @formatter:on
 
 # usage: test-ios.sh <device-id> <executable> [<args...>]
 
@@ -32,7 +34,7 @@ APP_PATH=$(dirname "$APP_PATH")
 readonly APP_PATH
 
 if [ ! -d "$APP_PATH" ]; then
-	echo App does not exist at path '$APP_PATH'!
+	echo App does not exist at path "$APP_PATH"!
 	exit 1
 fi
 
