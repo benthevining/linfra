@@ -141,6 +141,14 @@ repos:
   - id: markdownlint-fix
     args: [--disable, MD033, MD010, MD013]
     # exclude: CHANGELOG.md
+- repo: https://github.com/codingjoe/relint
+  rev: 3.0.0
+  hooks:
+  - id: relint
+    args: [-c, config/.relint.yml]
+    exclude: config/.relint.yml
+    log_file: logs/pre-commit/relint.log
+    verbose: true
 
   # various other formatters
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks.git
