@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ======================================================================================
 #  __    ____  __  __  ____  ___
 # (  )  (_  _)(  \/  )( ___)/ __)
@@ -10,17 +12,12 @@
 #
 # ======================================================================================
 
-# export device IDs for iOS simulators
-#
-# variables:
-# IOS_SIMULATOR_DEVICE_ID     - device ID of simulator to use for running iOS tests
-# TVOS_SIMULATOR_DEVICE_ID    - device ID of simulator to use for running tvOS tests
-# WATCHOS_SIMULATOR_DEVICE_ID - device ID of simulator to use for running watchOS tests
-#
-# TODO: possibly parse xcrun simctl list --json
+set -euxo pipefail
 
-export IOS_SIMULATOR_DEVICE_ID="iPhone 13"
+for device_id in "$IOS_SIMULATOR_DEVICE_ID" "$TVOS_SIMULATOR_DEVICE_ID" "$WATCHOS_SIMULATOR_DEVICE_ID"
+do
+	xcrun simctl shutdown "$device_id"
+	xcrun simctl erase "$device_id"
+done
 
-export TVOS_SIMULATOR_DEVICE_ID="Apple TV 4K (at 1080p) (2nd generation)"
-
-export WATCHOS_SIMULATOR_DEVICE_ID="Apple Watch Series 7 - 45mm"
+exit 0
