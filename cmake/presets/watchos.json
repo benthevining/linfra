@@ -17,19 +17,20 @@
       "name": "watchOS-r"
     },
     {
+      "configurePreset": "watchOS-device",
       "displayName": "watchOS (device - debug)",
-      "inherits": "watchOS",
-      "name": "watchOS-dev",
+      "inherits": "iOS",
+      "name": "watchOS-device",
       "nativeToolOptions": [
         "-sdk",
-        "watchos"
+        "watchOS"
       ]
     },
     {
       "configuration": "Release",
       "displayName": "watchOS (device - release)",
-      "inherits": "watchOS-dev",
-      "name": "watchOS-dev-r"
+      "inherits": "watchOS-device",
+      "name": "watchOS-device-r"
     }
   ],
   "cmakeMinimumRequired": {
@@ -54,9 +55,24 @@
         }
       },
       "description": "Note that you should define the WATCHOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
-      "displayName": "watchOS",
+      "displayName": "watchOS (simulator)",
       "inherits": "iOS",
       "name": "watchOS"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "watchOS"
+        },
+        "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
+          "type": "STRING",
+          "value": "-watchos"
+        }
+      },
+      "displayName": "watchOS (device)",
+      "inherits": "iOS",
+      "name": "watchOS-device"
     }
   ],
   "include": [
@@ -65,9 +81,15 @@
   "packagePresets": [
     {
       "configurePreset": "watchOS",
-      "displayName": "watchOS",
+      "displayName": "watchOS (simulator)",
       "inherits": "iOS",
       "name": "watchOS"
+    },
+    {
+      "configurePreset": "watchOS-device",
+      "displayName": "watchOS (device)",
+      "inherits": "iOS",
+      "name": "watchOS-device"
     }
   ],
   "testPresets": [
@@ -87,7 +109,7 @@
   "version": 6,
   "workflowPresets": [
     {
-      "displayName": "watchOS",
+      "displayName": "watchOS (simulator)",
       "name": "watchOS",
       "steps": [
         {
@@ -103,14 +125,6 @@
           "type": "build"
         },
         {
-          "name": "watchOS-dev",
-          "type": "build"
-        },
-        {
-          "name": "watchOS-dev-r",
-          "type": "build"
-        },
-        {
           "name": "watchOS",
           "type": "test"
         },
@@ -120,6 +134,28 @@
         },
         {
           "name": "watchOS",
+          "type": "package"
+        }
+      ]
+    },
+    {
+      "displayName": "watchOS (device)",
+      "name": "watchOS-device",
+      "steps": [
+        {
+          "name": "watchOS-device",
+          "type": "configure"
+        },
+        {
+          "name": "watchOS-device",
+          "type": "build"
+        },
+        {
+          "name": "watchOS-device-r",
+          "type": "build"
+        },
+        {
+          "name": "watchOS-device",
           "type": "package"
         }
       ]

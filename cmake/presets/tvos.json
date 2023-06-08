@@ -17,9 +17,10 @@
       "name": "tvOS-r"
     },
     {
+      "configurePreset": "tvOS-device",
       "displayName": "tvOS (device - debug)",
-      "inherits": "tvOS",
-      "name": "tvOS-dev",
+      "inherits": "iOS",
+      "name": "tvOS-device",
       "nativeToolOptions": [
         "-sdk",
         "appletvos"
@@ -28,8 +29,8 @@
     {
       "configuration": "Release",
       "displayName": "tvOS (device - release)",
-      "inherits": "tvOS-dev",
-      "name": "tvOS-dev-r"
+      "inherits": "tvOS-device",
+      "name": "tvOS-device-r"
     }
   ],
   "cmakeMinimumRequired": {
@@ -54,9 +55,24 @@
         }
       },
       "description": "Note that you should define the TVOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
-      "displayName": "tvOS",
+      "displayName": "tvOS (simulator)",
       "inherits": "iOS",
       "name": "tvOS"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": {
+          "type": "STRING",
+          "value": "tvOS"
+        },
+        "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
+          "type": "STRING",
+          "value": "-appletvos"
+        }
+      },
+      "displayName": "tvOS (device)",
+      "inherits": "iOS",
+      "name": "tvOS-device"
     }
   ],
   "include": [
@@ -65,9 +81,15 @@
   "packagePresets": [
     {
       "configurePreset": "tvOS",
-      "displayName": "tvOS",
+      "displayName": "tvOS (simulator)",
       "inherits": "iOS",
       "name": "tvOS"
+    },
+    {
+      "configurePreset": "tvOS-device",
+      "displayName": "tvOS (device)",
+      "inherits": "iOS",
+      "name": "tvOS-device"
     }
   ],
   "testPresets": [
@@ -87,7 +109,7 @@
   "version": 6,
   "workflowPresets": [
     {
-      "displayName": "tvOS",
+      "displayName": "tvOS (simulator)",
       "name": "tvOS",
       "steps": [
         {
@@ -103,14 +125,6 @@
           "type": "build"
         },
         {
-          "name": "tvOS-dev",
-          "type": "build"
-        },
-        {
-          "name": "tvOS-dev-r",
-          "type": "build"
-        },
-        {
           "name": "tvOS",
           "type": "test"
         },
@@ -120,6 +134,28 @@
         },
         {
           "name": "tvOS",
+          "type": "package"
+        }
+      ]
+    },
+    {
+      "displayName": "tvOS (device)",
+      "name": "tvOS-device",
+      "steps": [
+        {
+          "name": "tvOS-device",
+          "type": "configure"
+        },
+        {
+          "name": "tvOS-device",
+          "type": "build"
+        },
+        {
+          "name": "tvOS-device-r",
+          "type": "build"
+        },
+        {
+          "name": "tvOS-device",
           "type": "package"
         }
       ]
