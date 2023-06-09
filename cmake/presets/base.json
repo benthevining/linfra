@@ -17,6 +17,20 @@
   "configurePresets": [
     {
       "binaryDir": "${sourceDir}/Builds/${presetName}",
+      "cacheVariables": {
+        "CMAKE_COLOR_DIAGNOSTICS": {
+          "type": "BOOL",
+          "value": "ON"
+        },
+        "CMAKE_EXPORT_COMPILE_COMMANDS": {
+          "type": "BOOL",
+          "value": "ON"
+        },
+        "FETCHCONTENT_QUIET": {
+          "type": "BOOL",
+          "value": "OFF"
+        }
+      },
       "hidden": true,
       "installDir": "${sourceDir}/Builds/deploy/${presetName}",
       "name": "base",
