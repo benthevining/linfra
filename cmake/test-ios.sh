@@ -21,7 +21,8 @@
 # note that you need to build with the simulator SDK, not the device SDK,
 # and the global property XCODE_EMIT_EFFECTIVE_PLATFORM_NAME must be OFF
 
-# TODO: we're not correctly capturing the exit code of the launch command
+# TODO: we're not correctly capturing the exit code of the launch command, we're currently relying on
+# the FAIL_REGULAR_EXPRESSION test property...
 
 set -euxo pipefail
 
