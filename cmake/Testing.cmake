@@ -24,8 +24,12 @@ macro (limes_get_catch2)
 		set (CATCH_CONFIG_NO_POSIX_SIGNALS ON)
 	endif ()
 
-	FetchContent_Declare (Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-						  GIT_TAG origin/devel GIT_SHALLOW ON)
+	FetchContent_Declare (
+		Catch2
+		GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+		GIT_TAG origin/devel
+		GIT_SHALLOW ON
+		GIT_PROGRESS ON)
 
 	FetchContent_MakeAvailable (Catch2)
 
@@ -72,7 +76,10 @@ function (limes_configure_test_target target)
 			--warn NoAssertions
 			--order rand
 			--verbosity high
-		TEST_PREFIX "limes.${LIMES_TEST_CATEGORY}.unit.")
+		TEST_PREFIX "limes.${LIMES_TEST_CATEGORY}.unit."
+		PROPERTIES
+			SKIP_REGULAR_EXPRESSION "SKIPPED:"
+			FAIL_REGULAR_EXPRESSION "FAILED:")
 	# cmake-format: on
 
 endfunction ()
