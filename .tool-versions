@@ -19,9 +19,11 @@
 # To install the asdf shims, run `asdf install`. Make sure you
 # follow their docs to get asdf hooked into your shell properly.
 
+ccache 4.6.1 system
 cmake 3.25.0 3.24.0 system
 direnv 2.32.2 system
 emsdk 3.1.26 system
 git 2.36.1 system
 ninja 1.11.0 system
 pre-commit 2.20.0 system
+python 3.6.12 system
