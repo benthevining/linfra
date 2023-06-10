@@ -1,0 +1,106 @@
+{
+  "buildPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configuration": "Debug",
+      "configurePreset": "mull",
+      "displayName": "Mutation testing",
+      "inherits": "base",
+      "name": "mull"
+    }
+  ],
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": {
+          "type": "STRING",
+          "value": "$env{CLANG14_ROOT}/bin/clang++"
+        },
+        "CMAKE_C_COMPILER": {
+          "type": "STRING",
+          "value": "$env{CLANG14_ROOT}/bin/clang-14"
+        },
+        "MULL_CLANG_VERSION": {
+          "type": "STRING",
+          "value": "14"
+        },
+        "MULL_ENABLE": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "condition": {
+        "conditions": [
+          {
+            "lhs": "${hostSystemName}",
+            "rhs": "Darwin",
+            "type": "equals"
+          },
+          {
+            "lhs": "$env{CLANG14_ROOT}",
+            "rhs": "",
+            "type": "notEquals"
+          }
+        ],
+        "type": "allOf"
+      },
+      "description": "Mutation testing using Clang and the Mull compiler plugin. Note that you must set the CLANG14_ROOT environment variable to use this preset.",
+      "displayName": "mull",
+      "generator": "Ninja Multi-Config",
+      "inherits": "base",
+      "name": "mull"
+    }
+  ],
+  "include": [
+    "base.json"
+  ],
+  "testPresets": [
+    {
+      "condition": {
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin",
+        "type": "equals"
+      },
+      "configuration": "Debug",
+      "configurePreset": "mull",
+      "displayName": "Mutation testing",
+      "filter": {
+        "include": {
+          "label": "Mutation"
+        }
+      },
+      "inherits": "base",
+      "name": "mull"
+    }
+  ],
+  "version": 6,
+  "workflowPresets": [
+    {
+      "displayName": "Mutation testing",
+      "name": "mull",
+      "steps": [
+        {
+          "name": "mull",
+          "type": "configure"
+        },
+        {
+          "name": "mull",
+          "type": "build"
+        },
+        {
+          "name": "mull",
+          "type": "test"
+        }
+      ]
+    }
+  ]
+}

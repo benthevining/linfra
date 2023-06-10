@@ -11,6 +11,7 @@
     "cmake/presets/vs.json",
     "cmake/presets/xcode.json",
     "cmake/presets/android.json",
+    "cmake/presets/mull.json",
     "cmake/presets/ios/ios.json",
     "cmake/presets/ios/tvos.json",
     "cmake/presets/ios/watchos.json"

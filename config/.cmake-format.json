@@ -106,6 +106,15 @@
         "pargs": {
           "nargs": 1
         }
+      },
+      "mull_add_test": {
+        "kwargs": {
+          "REPORT_DIR": 1,
+          "TEST_NAME": 1
+        },
+        "pargs": {
+          "nargs": 1
+        }
       }
     }
   }
