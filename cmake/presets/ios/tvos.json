@@ -3,7 +3,7 @@
     {
       "configurePreset": "tvOS",
       "displayName": "tvOS (simulator - debug)",
-      "inherits": "iOS",
+      "inherits": "ios-base",
       "name": "tvOS",
       "nativeToolOptions": [
         "-sdk",
@@ -19,7 +19,7 @@
     {
       "configurePreset": "tvOS-device",
       "displayName": "tvOS (device - debug)",
-      "inherits": "iOS",
+      "inherits": "ios-base",
       "name": "tvOS-device",
       "nativeToolOptions": [
         "-sdk",
@@ -45,18 +45,19 @@
           "type": "STRING",
           "value": "${fileDir}/../test-ios.sh;$env{TVOS_SIMULATOR_DEVICE_ID}"
         },
-        "CMAKE_SYSTEM_NAME": {
-          "type": "STRING",
-          "value": "tvOS"
-        },
         "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
           "type": "STRING",
           "value": "-appletvsimulator"
         }
       },
+      "condition": {
+        "lhs": "$env{TVOS_SIMULATOR_DEVICE_ID}",
+        "rhs": "",
+        "type": "notEquals"
+      },
       "description": "Note that you should define the TVOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
       "displayName": "tvOS (simulator)",
-      "inherits": "iOS",
+      "inherits": "tvOS-device",
       "name": "tvOS"
     },
     {
@@ -71,7 +72,7 @@
         }
       },
       "displayName": "tvOS (device)",
-      "inherits": "iOS",
+      "inherits": "ios-base",
       "name": "tvOS-device"
     }
   ],
@@ -82,13 +83,13 @@
     {
       "configurePreset": "tvOS",
       "displayName": "tvOS (simulator)",
-      "inherits": "iOS",
+      "inherits": "ios-base",
       "name": "tvOS"
     },
     {
       "configurePreset": "tvOS-device",
       "displayName": "tvOS (device)",
-      "inherits": "iOS",
+      "inherits": "ios-base",
       "name": "tvOS-device"
     }
   ],
@@ -96,7 +97,7 @@
     {
       "configurePreset": "tvOS",
       "displayName": "tvOS (simulator - debug)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "tvOS"
     },
     {

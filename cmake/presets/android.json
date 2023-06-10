@@ -34,6 +34,21 @@
           "value": "Android"
         }
       },
+      "condition": {
+        "conditions": [
+          {
+            "lhs": "$env{ANDROID_SDK_ROOT}",
+            "rhs": "",
+            "type": "notEquals"
+          },
+          {
+            "lhs": "$env{ANDROID_SIMULATOR_AVD}",
+            "rhs": "",
+            "type": "notEquals"
+          }
+        ],
+        "type": "allOf"
+      },
       "description": "Note that you should set the environment variables ANDROID_NDK_ROOT, ANDROID_SDK_ROOT, and ANDROID_SIMULATOR_AVD when using this preset.",
       "displayName": "Android",
       "inherits": "base",

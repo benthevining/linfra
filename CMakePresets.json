@@ -8,12 +8,12 @@
     "cmake/presets/clang.json",
     "cmake/presets/emscripten.json",
     "cmake/presets/gcc.json",
-    "cmake/presets/ios.json",
-    "cmake/presets/tvos.json",
     "cmake/presets/vs.json",
-    "cmake/presets/watchos.json",
     "cmake/presets/xcode.json",
-    "cmake/presets/android.json"
+    "cmake/presets/android.json",
+    "cmake/presets/ios/ios.json",
+    "cmake/presets/ios/tvos.json",
+    "cmake/presets/ios/watchos.json"
   ],
   "version": 6
 }

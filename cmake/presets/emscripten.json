@@ -26,6 +26,11 @@
           "value": true
         }
       },
+      "condition": {
+        "lhs": "$env{EMSCRIPTEN_ROOT}",
+        "rhs": "",
+        "type": "notEquals"
+      },
       "description": "Note that you must set the environment variable EMSCRIPTEN_ROOT to the path of your Emscripten SDK installation. You can find this by running which emcc (Unix) or where emcc (Windows)",
       "displayName": "Emscripten",
       "generator": "Ninja Multi-Config",

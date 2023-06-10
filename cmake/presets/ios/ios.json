@@ -1,14 +1,9 @@
 {
   "buildPresets": [
     {
-      "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
-      },
       "configurePreset": "iOS",
       "displayName": "iOS (simulator - debug)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS",
       "nativeToolOptions": [
         "-sdk",
@@ -22,14 +17,9 @@
       "name": "iOS-r"
     },
     {
-      "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
-      },
       "configurePreset": "iOS-device",
       "displayName": "iOS (device - debug)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS-device",
       "nativeToolOptions": [
         "-sdk",
@@ -55,28 +45,19 @@
           "type": "STRING",
           "value": "${fileDir}/../test-ios.sh;$env{IOS_SIMULATOR_DEVICE_ID}"
         },
-        "CMAKE_SYSTEM_NAME": {
-          "type": "STRING",
-          "value": "iOS"
-        },
         "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
           "type": "STRING",
           "value": "-iphonesimulator"
-        },
-        "IOS": {
-          "type": "BOOL",
-          "value": "ON"
         }
       },
       "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
+        "lhs": "$env{IOS_SIMULATOR_DEVICE_ID}",
+        "rhs": "",
+        "type": "notEquals"
       },
       "description": "Note that you should define the IOS_SIMULATOR_DEVICE_ID environment variable to initialize the crosscompiling emulator.",
       "displayName": "iOS (simulator)",
-      "generator": "Xcode",
-      "inherits": "base",
+      "inherits": "iOS-device",
       "name": "iOS"
     },
     {
@@ -90,14 +71,8 @@
           "value": "-iphoneos"
         }
       },
-      "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
-      },
       "displayName": "iOS (device)",
-      "generator": "Xcode",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS-device"
     }
   ],
@@ -106,25 +81,15 @@
   ],
   "packagePresets": [
     {
-      "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
-      },
       "configurePreset": "iOS",
       "displayName": "iOS (simulator)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS"
     },
     {
-      "condition": {
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin",
-        "type": "equals"
-      },
       "configurePreset": "iOS-device",
       "displayName": "iOS (device)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS-device"
     }
   ],
@@ -132,7 +97,7 @@
     {
       "configurePreset": "iOS",
       "displayName": "iOS (simulator - debug)",
-      "inherits": "base",
+      "inherits": "ios-base",
       "name": "iOS"
     },
     {
