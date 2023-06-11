@@ -23,15 +23,15 @@
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": {
           "type": "STRING",
-          "value": "$env{CLANG14_ROOT}/bin/clang++"
+          "value": "$env{MULL_CLANG_ROOT}/bin/clang++"
         },
         "CMAKE_C_COMPILER": {
           "type": "STRING",
-          "value": "$env{CLANG14_ROOT}/bin/clang-14"
+          "value": "$env{MULL_CLANG_ROOT}/bin/clang-$env{MULL_CLANG_VERSION}"
         },
         "MULL_CLANG_VERSION": {
           "type": "STRING",
-          "value": "14"
+          "value": "$env{MULL_CLANG_VERSION}"
         },
         "MULL_ENABLE": {
           "type": "BOOL",
@@ -46,14 +46,19 @@
             "type": "equals"
           },
           {
-            "lhs": "$env{CLANG14_ROOT}",
+            "lhs": "$env{MULL_CLANG_ROOT}",
+            "rhs": "",
+            "type": "notEquals"
+          },
+          {
+            "lhs": "$env{MULL_CLANG_VERSION}",
             "rhs": "",
             "type": "notEquals"
           }
         ],
         "type": "allOf"
       },
-      "description": "Mutation testing using Clang and the Mull compiler plugin. Note that you must set the CLANG14_ROOT environment variable to use this preset.",
+      "description": "Mutation testing using Clang and the Mull compiler plugin. Note that you must set the MULL_CLANG_ROOT and MULL_CLANG_VERSION environment variables to use this preset.",
       "displayName": "mull",
       "generator": "Ninja Multi-Config",
       "inherits": "base",

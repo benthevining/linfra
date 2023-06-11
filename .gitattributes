@@ -30,6 +30,7 @@ CITATION.cff      2_space_indent
 *.yml             2_space_indent
 *.yaml            2_space_indent
 *.json            2_space_indent
+*.py              2_space_indent
 *.clang-*         2_space_indent
 
 .ecrc             text

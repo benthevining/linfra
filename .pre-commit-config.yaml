@@ -10,6 +10,8 @@
 #
 # ======================================================================================
 
+# TODO: Python linting
+
 # config file for pre-commit: https://pre-commit.com/
 #
 # These plugins are run before each git commit, but can also be run on demand using:
@@ -119,6 +121,7 @@ repos:
   hooks:
   - id: check-added-large-files
     args: [--maxkb=64]
+  - id: check-ast
   - id: check-case-conflict
   - id: check-executables-have-shebangs
   - id: check-shebang-scripts-are-executable
@@ -129,8 +132,10 @@ repos:
   - id: check-yaml
   - id: destroyed-symlinks
   - id: detect-private-key
+  - id: double-quote-string-fixer
   - id: end-of-file-fixer
   - id: fix-byte-order-marker
+  - id: fix-encoding-pragma
   - id: forbid-submodules
   - id: mixed-line-ending
     args: [--fix=lf]
