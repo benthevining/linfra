@@ -4,7 +4,7 @@
 
 The critical functionality linfra provides consists of:
 * CMake presets, which depend on
-* Environment variables
+* Environment variables (configured using `direnv`)
 * CMake utility code (mostly to make tests work on all target platforms)
 
 Several of the scripts and files enabling this functionality are required to be at a known path on the filesystem, and cannot easily be

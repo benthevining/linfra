@@ -13,13 +13,13 @@
 #
 # ======================================================================================
 # @formatter:on
-#
+
 # usage: test-android.sh <sdk-root-path> <avd-name> <executable> [<args...>]
 
 # TODO: forward args to app
 # emulator seems to enter an event loop when you start it...
 
-set -euxo pipefail
+set -euo pipefail
 
 if [ -z "$ANDROID_SDK_ROOT" ]; then
 	ANDROID_SDK_ROOT="$1"

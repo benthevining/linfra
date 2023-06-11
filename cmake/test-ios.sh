@@ -39,7 +39,7 @@
 # TODO: we're not correctly capturing the exit code of the launch command, we're currently relying on
 # the FAIL_REGULAR_EXPRESSION test property...
 
-set -euxo pipefail
+set -euo pipefail
 
 DEVICE_ID="$1"
 readonly DEVICE_ID

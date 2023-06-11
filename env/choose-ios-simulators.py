@@ -13,6 +13,17 @@
 #
 # ======================================================================================
 
+"""
+Usage: choose-ios-simulators.py <platform>
+
+This script parses the output of 'xcrun simctl list --json' to choose simulator device UUIDs to use for each platform.
+When successful, the script will print a single device UUID to stdout for the requested platform. The platform is
+specified as a positional argument to the script and must be one of iOS, tvOS, or watchOS.
+
+This script is invoked by direnv to choose default values for the IOS_SIMULATOR_DEVICE_ID, TVOS_SIMULATOR_DEVICE_ID,
+and WATCHOS_SIMULATOR_DEVICE_ID environment variables.
+"""
+
 import sys
 import subprocess
 import json
@@ -35,6 +46,9 @@ run_result = subprocess.run (['xcrun', 'simctl', 'list', '--json'],
 top_dict = json.loads (run_result.stdout)
 
 #
+
+# Need to chooose a runtime to use and save its identifier.
+# Pick the newest available runtime for the desired platform.
 
 runtimes = top_dict['runtimes']
 

@@ -53,7 +53,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	curl -1sLf 'https://dl.cloudsmith.io/public/mull-project/mull-stable/setup.deb.sh' | sudo -E bash
 	apt-get update
 	apt-get install "mull-$MULL_CLANG_VERSION"
-	exit $?
+	echo Installed Mull using apt
+	exit 0
 fi
 
 # need to manually download & install for MacOS
@@ -73,23 +74,21 @@ downloaded_zip="$TEMP_DIR/$installer_file_name"
 readonly downloaded_zip
 
 if [ ! -d "$TEMP_DIR" ]; then
-	mkdir "$TEMP_DIR"
+	mkdir -p "$TEMP_DIR"
 fi
 
-if [ ! -f "$downloaded_zip" ]; then
-	download_url="https://github.com/mull-project/mull/releases/download/$MULL_LATEST_VERSION/$installer_file_name"
-	readonly download_url
-	echo Artefact download URL: "$download_url"
-	cd "$TEMP_DIR"
-	curl -LO "$download_url"
-fi
+download_url="https://github.com/mull-project/mull/releases/download/$MULL_LATEST_VERSION/$installer_file_name"
+readonly download_url
+
+echo Artefact download URL: "$download_url"
+
+cd "$TEMP_DIR"
+curl -LO "$download_url"
 
 unzipped_dir="$TEMP_DIR/$installer_name"
 readonly unzipped_dir
 
-if [ ! -d "$unzipped_dir" ]; then
-	unzip "$downloaded_zip"
-fi
+unzip "$downloaded_zip"
 
 #
 

@@ -24,7 +24,7 @@ See this script file for a more detailed discussion of its internals.
 The IDs of the simulator devices to use for each platform can be specified in the environment variables `IOS_SIMULATOR_DEVICE_ID`, `TVOS_SIMULATOR_DEVICE_ID`,
 and `WATCHOS_SIMULATOR_DEVICE_ID`. Note that these environment variables are read by the CMake presets at configure time, so in order for changing these
 variables to take effect, you must re-configure CMake. Each of these environment variables are initialized by `direnv`, but you can override them manually from
-the command line, or by using local `.env` or `.envrc.user` files. See [`ios.envrc`](../env/ios.envrc) for the definition of the default values.
+the command line, or by using local `.env` or `.envrc.user` files.
 
 ## CMake internals
 
@@ -37,8 +37,8 @@ CMake technically supports building for both the device and simulator within the
 `${EFFECTIVE_PLATFORM}` placeholders at build time - meaning that the paths to test executables that CMake sends to the `test-ios.sh` script contain the *literal*
 string `${EFFECTIVE_PLATFORM}`, which our script cannot reliably expand (since we cannot know what platform the user selected at build time). The solution to this
 is to use separate build trees to build for devices and simulators. This is why there are separate sets of `-device` and non-`device` CMake presets. Each CMake
-preset explicitly declares either the device or simulator platform at both configure and build time. Each library's CMakeLists.txt also contains some logic to set
-the `XCODE_EMIT_EFFECTIVE_PLATFORM_NAME` global property to `OFF` for our testing purposes.
+preset explicitly declares either the device or simulator platform at both configure and build time. The `XCODE_EMIT_EFFECTIVE_PLATFORM_NAME` CMake global property
+must also be set to `OFF`, which is handled by the `limes_default_project_options()` macro.
 
 ## Utility scripts
 

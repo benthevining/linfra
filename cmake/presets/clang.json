@@ -34,6 +34,21 @@
           "value": "$env{CMAKE_APPLE_SILICON_PROCESSOR}"
         }
       },
+      "condition": {
+        "conditions": [
+          {
+            "lhs": "$env{CMAKE_APPLE_SILICON_PROCESSOR}",
+            "rhs": "",
+            "type": "notEquals"
+          },
+          {
+            "lhs": "${hostSystemName}",
+            "rhs": "Darwin",
+            "type": "notEquals"
+          }
+        ],
+        "type": "anyOf"
+      },
       "displayName": "Clang",
       "generator": "Ninja Multi-Config",
       "inherits": "base",
