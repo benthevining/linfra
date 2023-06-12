@@ -37,7 +37,7 @@ if len(sys.argv) < 2:
 platform = sys.argv[1]
 
 if not platform in ['iOS', 'tvOS', 'watchOS']:
-	print ('Invalid platform requested: ', platform)
+	print (f'Invalid platform requested: \'{platform}\'')
 	sys.exit(1)
 
 run_result = subprocess.run (['xcrun', 'simctl', 'list', '--json'],
@@ -72,7 +72,7 @@ runtime_id = chosen_runtime['identifier']
 devices_dict = top_dict['devices']
 
 if not runtime_id in devices_dict:
-	print('Runtime ID ', runtime_id, ' not found in devices dict!')
+	print(f'Runtime ID \'{runtime_id}\' not found in devices dict!')
 	sys.exit(1)
 
 devices = devices_dict[runtime_id]

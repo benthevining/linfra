@@ -1,0 +1,2 @@
+This is an environment variable. Linfra's provided direnv scripts will initialize this variable to a suitable default value,
+but you can override it with a local .env or .envrc.user file.
