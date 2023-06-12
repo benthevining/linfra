@@ -1,0 +1,20 @@
+{
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "FETCHCONTENT_FULLY_DISCONNECTED": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "hidden": true,
+      "name": "offline-base"
+    }
+  ],
+  "version": 6
+}

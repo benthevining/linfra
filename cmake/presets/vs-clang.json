@@ -6,24 +6,24 @@
         "rhs": "Windows",
         "type": "equals"
       },
-      "configurePreset": "vs",
-      "displayName": "MSVC (debug)",
+      "configurePreset": "vs-clang",
+      "displayName": "VS/Clang (debug)",
       "inherits": "base",
-      "name": "vs",
+      "name": "vs-clang",
       "nativeToolOptions": [
-        "-flp1:logfile=${sourceDir}/logs/builds/msvc/Debug/errors.log;errorsonly",
-        "-flp2:logfile=${sourceDir}/logs/builds/msvc/Debug/warnings.log;warningsonly",
+        "-flp1:logfile=${sourceDir}/logs/builds/clang/Debug/errors.log;errorsonly",
+        "-flp2:logfile=${sourceDir}/logs/builds/clang/Debug/warnings.log;warningsonly",
         "-clp:PerformanceSummary;Summary"
       ]
     },
     {
       "configuration": "Release",
-      "displayName": "MSVC (release)",
-      "inherits": "vs",
-      "name": "vs-r",
+      "displayName": "VS/Clang (release)",
+      "inherits": "vs-clang",
+      "name": "vs-clang-r",
       "nativeToolOptions": [
-        "-flp1:logfile=${sourceDir}/logs/builds/msvc/Release/errors.log;errorsonly",
-        "-flp2:logfile=${sourceDir}/logs/builds/msvc/Release/warnings.log;warningsonly",
+        "-flp1:logfile=${sourceDir}/logs/builds/clang/Release/errors.log;errorsonly",
+        "-flp2:logfile=${sourceDir}/logs/builds/clang/Release/warnings.log;warningsonly",
         "-clp:PerformanceSummary;Summary"
       ]
     }
@@ -40,10 +40,11 @@
         "rhs": "Windows",
         "type": "equals"
       },
-      "displayName": "MSVC",
+      "displayName": "VS + Clang",
       "generator": "Visual Studio 17 2022",
       "inherits": "base",
-      "name": "vs"
+      "name": "vs-clang",
+      "toolset": "ClangCl"
     }
   ],
   "include": [
@@ -56,10 +57,10 @@
         "rhs": "Windows",
         "type": "equals"
       },
-      "configurePreset": "vs",
-      "displayName": "MSVC",
+      "configurePreset": "vs-clang",
+      "displayName": "VS/Clang",
       "inherits": "base",
-      "name": "vs"
+      "name": "vs-clang"
     }
   ],
   "testPresets": [
@@ -69,46 +70,46 @@
         "rhs": "Windows",
         "type": "equals"
       },
-      "configurePreset": "vs",
-      "displayName": "MSVC (debug)",
+      "configurePreset": "vs-clang",
+      "displayName": "VS/Clang (debug)",
       "inherits": "base",
-      "name": "vs"
+      "name": "vs-clang"
     },
     {
       "configuration": "Release",
-      "displayName": "MSVC (release)",
-      "inherits": "vs",
-      "name": "vs-r"
+      "displayName": "VS/Clang (release)",
+      "inherits": "vs-clang",
+      "name": "vs-clang-r"
     }
   ],
   "version": 6,
   "workflowPresets": [
     {
-      "displayName": "MSVC",
-      "name": "vs",
+      "displayName": "VS/Clang",
+      "name": "vs-clang",
       "steps": [
         {
-          "name": "vs",
+          "name": "vs-clang",
           "type": "configure"
         },
         {
-          "name": "vs",
+          "name": "vs-clang",
           "type": "build"
         },
         {
-          "name": "vs-r",
+          "name": "vs-clang-r",
           "type": "build"
         },
         {
-          "name": "vs",
+          "name": "vs-clang",
           "type": "test"
         },
         {
-          "name": "vs-r",
+          "name": "vs-clang-r",
           "type": "test"
         },
         {
-          "name": "vs",
+          "name": "vs-clang",
           "type": "package"
         }
       ]

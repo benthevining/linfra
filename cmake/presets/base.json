@@ -4,7 +4,6 @@
       "cleanFirst": false,
       "configuration": "Debug",
       "hidden": true,
-      "jobs": 4,
       "name": "base",
       "verbose": true
     }
