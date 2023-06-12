@@ -61,6 +61,7 @@ find_program (PYTHON_PROGRAM NAMES python3 python DOC "Python interpreter execut
 
 mark_as_advanced (PYTHON_PROGRAM)
 
+block ()
 if (PYTHON_PROGRAM)
 	# check if coverxygen is installed
 	if (NOT DEFINED CACHE{COVERXYGEN_INSTALLED})
@@ -69,12 +70,13 @@ if (PYTHON_PROGRAM)
 			OUTPUT_VARIABLE output ERROR_VARIABLE error)
 
 		if (coverxygen_found EQUAL 0)
-			set (COVERXYGEN_INSTALLED ON CACHE INTERNAL
-											   "Whether the coverxygen Python module was found")
+			set (found_value ON)
 		else ()
-			set (COVERXYGEN_INSTALLED OFF CACHE INTERNAL
-												"Whether the coverxygen Python module was found")
+			set (found_value OFF)
 		endif ()
+
+		set (COVERXYGEN_INSTALLED "${found_value}"
+			 CACHE INTERNAL "Whether the coverxygen Python module was found")
 
 		message (CONFIGURE_LOG "coverxygen found: ${COVERXYGEN_INSTALLED}")
 	endif ()
@@ -85,6 +87,7 @@ if (PYTHON_PROGRAM)
 else ()
 	message (WARNING "Python not found, can't set up docs coverage reports")
 endif ()
+endblock ()
 
 #
 

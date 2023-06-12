@@ -92,6 +92,10 @@ repos:
     name: Insert license header in other config files
     args: [--license-filepath=config/limes_header.txt, --comment-style=#, --detect-license-in-X-top-lines=16]
     files: .envrc|.tool-versions|.bumpversion.cfg|.editorconfig|.gitignore|.gitattributes|.clang-format|.clang-tidy|.pre-commit-config.yaml
+  - id: insert-license
+    name: Insert license header in Batch files
+    args: [--license-filepath=config/limes_header.txt, '--comment-style=::', --detect-license-in-X-top-lines=16]
+    files: .bat
 
 # CMake formatting & linting
 - repo: https://github.com/cheshirekow/cmake-format-precommit
