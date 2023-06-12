@@ -9,7 +9,7 @@ This repository contains:
 * Utility scripts
 
 This repository is designed to be project-agnostic, and should be usable by a wide range of consuming projects. See
-[the usage docs](docs/usage.md) for more information about using `linfra` in your project.
+[the usage docs](docs/rst/usage.rst) for more information about using `linfra` in your project.
 
 The ultimate goal of `linfra` is to enable the following workflow for building and testing for a variety of toolchains and platforms:
 ```sh

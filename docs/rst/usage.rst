@@ -58,20 +58,5 @@ and you should add ``.env`` and ``.envrc.user`` to your ``.gitignore`` file.
 Using linfra for testing
 ################################
 
-In order to include linfra's provided CMake utility code, you can simply ``add_subdirectory (linfra)``.
-
-On platforms like iOS and Android, only application bundles can be installed and run. You should call :command:`limes_configure_app_bundle()` to build your
-test executable as an app bundle that can be executed on iOS and Android simulators.
-
-I also suggest calling the macro :command:`limes_default_project_options()` in your top-level ``CMakeLists.txt`` file. This macro sets the global property
-``XCODE_EMIT_EFFECTIVE_PLATFORM_NAME`` to ``OFF`` (which is important, because our iOS crosscompiling emulator script won't work if this option is
-on!) if the current project is the top-level project and you're building for iOS. If you're building for Emscripten, this macro also sets some
-global options for enabling exceptions.
-
-If you're using Catch2 for testing, I recommend calling the macro :command:`limes_get_catch2()` to populate Catch2. This macro populates Catch2 using
-FetchContent, and does a bit of patching where needed:
-* XCode signing is disabled before adding the Catch targets
-* On tvOS and watchOS, POSIX signals are disabled (Catch won't compile on these platforms otherwise)
-* On watchOS, we add the ``-fgnu-inline-asm`` compile flag to Catch (it won't compile otherwise)
-* On Emscripten, we add flags to Catch to enable exceptions
-* Lastly, this macro includes Catch's provided ``Catch.cmake`` file
+Some CMake configuration is needed to get test executables building and running for all platforms. See the :ref:`LimesTesting <testing-cmake>`
+module for documentation of the relevant functions.

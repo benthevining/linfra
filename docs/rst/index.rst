@@ -6,6 +6,7 @@ Linfra documentation
 	:maxdepth: 1
 	:caption: The following reference guides are available:
 
-	usage.rst
-	env-vars.rst
-	platforms.rst
+	usage
+	env-vars
+	platforms
+	cmake

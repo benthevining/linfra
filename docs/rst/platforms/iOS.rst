@@ -16,7 +16,8 @@ The ``-device`` presets do not set ``CMAKE_CROSSCOMPILING_EMULATOR``. Running th
 cannot be executed on the host system, even by the iOS simulator. Therefore, the non-``device`` presets currently do not have CTest presets, and those workflow
 presets exclude test steps.
 
-The non-``device`` presets set ``CMAKE_CROSSCOMPILING_EMULATOR`` to the script [``test-ios.sh``](../cmake/test-ios.sh), a harness script that:
+The non-``device`` presets set ``CMAKE_CROSSCOMPILING_EMULATOR`` to the script ``test-ios.sh``, a harness script that:
+
 * selects the appropriate simulator device for the current target platform (iOS, tvOS, or watchOS)
 * boots this simulator device if it isn't already running
 * installs the test application on the simulator device
@@ -48,10 +49,8 @@ must also be set to ``OFF``, which is handled by the :command:`limes_default_pro
 Utility scripts
 ################################
 
-The scripts [``start-ios-simulators.sh``](../scripts/start-ios-simulators.sh) and [``shutdown-ios-simulators.sh``](../scripts/shutdown-ios-simulators.sh) are provided
-for developer convenience. These scripts read the :envvar:`IOS_SIMULATOR_DEVICE_ID`, :envvar:`TVOS_SIMULATOR_DEVICE_ID`, and :envvar:`WATCHOS_SIMULATOR_DEVICE_ID` environment variables
-and start or shutdown the simulator devices specified by these variables. Usage of both scripts is entirely optional; the normal CMake build-and-test workflow should
-"just work" without ever manually running either of these scripts.
+The scripts ``start-ios-simulators.sh`` and ``shutdown-ios-simulators.sh`` are provided for developer convenience. These scripts read the :envvar:`IOS_SIMULATOR_DEVICE_ID`,
+:envvar:`TVOS_SIMULATOR_DEVICE_ID`, and :envvar:`WATCHOS_SIMULATOR_DEVICE_ID` environment variables and start or shutdown the simulator devices specified by these variables. Usage of both scripts is entirely optional; the normal CMake build-and-test workflow should "just work" without ever manually running either of these scripts.
 
 Starting simulator devices can take a few moments. If the appropriate simulator device isn't running when ``test-ios.sh`` is invoked, that script will start the
 simulator device, but this can make the build and/or test steps take a bit longer. Run ``start-ios-simulators.sh`` before running the build to make sure all simulator
