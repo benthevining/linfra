@@ -82,7 +82,7 @@ repos:
 
 # Insert license header
 - repo: https://github.com/Lucas-C/pre-commit-hooks
-  rev: v1.4.2
+  rev: v1.5.1
   hooks:
   - id: insert-license
     name: Insert license header in CMake and shell files
@@ -164,13 +164,13 @@ repos:
   - id: forbid-bidi-controls
   # Markdown
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.33.0
+  rev: v0.34.0
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD033, MD010, MD013]
     # exclude: CHANGELOG.md
 - repo: https://github.com/codingjoe/relint
-  rev: 3.0.0
+  rev: 3.1.0
   hooks:
   - id: relint
     args: [-c, config/.relint.yml]
@@ -180,7 +180,7 @@ repos:
 
   # various other formatters
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks.git
-  rev: v2.7.0
+  rev: v2.9.0
   hooks:
   - id: pretty-format-ini
     args: [--autofix]
@@ -189,7 +189,7 @@ repos:
 
   # validate JSON/YAML schemas
 - repo: https://github.com/sirosen/check-jsonschema
-  rev: 0.21.0
+  rev: 0.23.1
   hooks:
   - id: check-jsonschema
     name: Validate CMake presets
@@ -199,7 +199,7 @@ repos:
 
 # Git linting
 - repo: https://github.com/jorisroovers/gitlint
-  rev: v0.19.0dev
+  rev: v0.19.1
   hooks:
   - id: gitlint
     args: [--config, config/.gitlint, --msg-filename]
