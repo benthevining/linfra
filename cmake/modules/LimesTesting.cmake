@@ -98,7 +98,7 @@ calling :command:`limes_configure_app_bundle`, linking the executable target to
 ``Catch2::Catch2WithMain``, and calling ``catch_discover_tests``.
 
 Note that this function is intended for use with executable targets whose source files include
-Catch2 ``TEST_CASE`` s.
+Catch2 ``TEST_CASE`` declarations.
 
 Options:
 
@@ -113,6 +113,8 @@ Options:
 
 ``TEST_PREFIX``
  Prefix to prepend to all test case names to create test names registered with CTest.
+
+TODO: a CATCH_FLAGS option/variable?
 
 #]=======================================================================]
 function (limes_configure_test_target target)
@@ -155,8 +157,8 @@ endfunction ()
 This function creates a custom target to drive running benchmarks in the specified ``<executableTarget>``.
 
 This function is intended for use with executable targets whose source files contain Catch2
-``TEST_CASE`` s with the ``[!benchmark]`` tag. The custom target ``BENCH_TARGET``, when built, will run
-all benchmark test cases in the ``<executableTarget>``.
+``TEST_CASE`` declarations with the ``[!benchmark]`` tag. The custom target (whose name is specified in
+``BENCH_TARGET``), when built, will run all benchmark test cases in the ``<executableTarget>``.
 
 Options:
 
@@ -168,6 +170,7 @@ Options:
  ``COMMENT``.
 
 TODO: Need to call limes_configure_app_bundle() here?
+TODO: custom Catch2 JSON reporter?
 
 #]=======================================================================]
 function (limes_configure_benchmark_target target)

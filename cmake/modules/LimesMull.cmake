@@ -106,6 +106,8 @@ also links ``<executableTarget>`` to ``mull::flags``, to compile it using the Mu
 
 This function simply does nothing if Mull is unavailable or if ``MULL_ENABLE`` is off.
 
+``<executableTarget>`` must be an existing executable target.
+
 Options:
 
 ``TEST_NAME``

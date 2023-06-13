@@ -8,7 +8,7 @@ The critical functionality linfra provides consists of:
 
 * CMake presets, which depend on
 * :ref:`Environment variables <env-vars>` (configured using ``direnv``)
-* CMake utility code (mostly to make tests work on all target platforms)
+* :ref:`CMake utility code <cmake-modules>` (mostly to make tests work on all target platforms)
 
 Several of the scripts and files enabling this functionality are required to be at a known path on the filesystem, and cannot easily be
 fetched by something like ``CPM.cmake`` or ``FetchContent`` (specifically, the CMake preset json files and the crosscompiling emulator wrapper

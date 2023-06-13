@@ -14,13 +14,13 @@
 :EXEC
 	@set COMMAND_OUTPUT=
 
-    @for /F "delims=" %%i in ('%~1 2^>nul') do @(
-        set COMMAND_OUTPUT=%%i
-    )
+	@for /F "delims=" %%i in ('%~1 2^>nul') do @(
+		set COMMAND_OUTPUT=%%i
+	)
 
-    @if not "%COMMAND_OUTPUT%"=="" (
-        echo %1 -^> %COMMAND_OUTPUT%
-    )
+	@if not "%COMMAND_OUTPUT%"=="" (
+		echo %1 -^> %COMMAND_OUTPUT%
+	)
 @goto :EOF
 
 :: Checks for existence of the given program and sets the variable COMMAND_EXISTS
