@@ -226,8 +226,7 @@ function (limes_configure_benchmark_target target)
 
     separate_arguments (args UNIX_COMMAND "${LIMES_CATCH_FLAGS_BENCH}")
 
-    add_custom_target (
-        "${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" ${args}
-        COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL)
+    add_custom_target ("${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" ${args}
+                       COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL)
 
 endfunction ()

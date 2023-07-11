@@ -41,6 +41,7 @@
   "configurePresets": [
     {
       "cacheVariables": {
+        "BUILD_TESTING": null,
         "CMAKE_CROSSCOMPILING_EMULATOR": {
           "type": "STRING",
           "value": "${fileDir}/../test-ios.sh;$env{WATCHOS_SIMULATOR_DEVICE_ID}"
@@ -62,6 +63,10 @@
     },
     {
       "cacheVariables": {
+        "BUILD_TESTING": {
+          "type": "BOOL",
+          "value": "OFF"
+        },
         "CMAKE_SYSTEM_NAME": {
           "type": "STRING",
           "value": "watchOS"
