@@ -13,9 +13,9 @@
 :: export default settings for CMake
 :: see CMake's environment variables documentation: https://cmake.org/cmake/help/latest/manual/cmake-env-variables.7.html
 
-call util.bat
+@call util.bat
 
-call :CHECK_FOR ninja
+@call :CHECK_FOR ninja
 
 if %COMMAND_EXISTS% EQU 1 (
 	@set CMAKE_GENERATOR="Ninja Multi-Config"
@@ -25,7 +25,7 @@ if %COMMAND_EXISTS% EQU 1 (
 
 @set CMAKE_CONFIG_TYPE=Debug
 
-@set CMAKE_COLOR_DIAGNOSTICS=ON
+@set CMAKE_COLOR_DIAGNOSTICS=OFF
 
 @set CMAKE_EXPORT_COMPILE_COMMANDS=ON
 

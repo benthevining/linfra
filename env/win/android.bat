@@ -15,7 +15,7 @@
 :: variables:
 :: ANDROID_SDK_ROOT - path to the Android SDK installation. Defaults to $HOME/Library/Android/sdk.
 :: ANDROID_NDK_ROOT - path to the Android NDK to use. This file attempts to locate it automatically but your .env can override it.
-:: ANDROID_SIMULATOR_AVD - ID of the AVD to use with the Android Studio emulator
+:: ANDROID_SIMULATOR_AVD - ID of the AVD to use with the Android Studio emulator (TODO)
 
 :: TODO: test other possible locations
 @set ANDROID_SDK_ROOT=C:\Users\%USERNAME%\AppData\Local\Android\sdk

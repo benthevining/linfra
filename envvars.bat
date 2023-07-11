@@ -10,6 +10,8 @@
 ::
 :: ======================================================================================
 
-call env/win/android.bat
-call env/win/cmake.bat
-call env/win/emscripten.bat
+@set PRE_COMMIT_COLOR=never
+
+@call env/win/android.bat
+@call env/win/cmake.bat
+@call env/win/emscripten.bat

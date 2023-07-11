@@ -15,15 +15,15 @@
 :: variables:
 :: EMSCRIPTEN_ROOT - path to the root of the Emscripten SDK. This file attempts to locate it automatically.
 
-call util.bat
+@call util.bat
 
 :: check for existence of emcc (emscripten compiler)
-call :CHECK_FOR emcc
+@call :CHECK_FOR emcc
 
 if %COMMAND_EXISTS% EQU 1
 (
 	:: store path of emcc executable into variable COMMAND_OUTPUT
-	call :EXEC "where emcc"
+	@call :EXEC "where emcc"
 
 	:: equivalent of dirname in bash, outputs to dirname variable
 	for %%F in (%COMMAND_OUTPUT%) do set dirname=%%~dpF

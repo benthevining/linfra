@@ -15,11 +15,11 @@
 	@set COMMAND_OUTPUT=
 
 	@for /F "delims=" %%i in ('%~1 2^>nul') do @(
-		set COMMAND_OUTPUT=%%i
+		@set COMMAND_OUTPUT=%%i
 	)
 
 	@if not "%COMMAND_OUTPUT%"=="" (
-		echo %1 -^> %COMMAND_OUTPUT%
+		@echo %1 -^> %COMMAND_OUTPUT%
 	)
 @goto :EOF
 
