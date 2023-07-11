@@ -99,7 +99,8 @@ Creating mutation tests
 
         mull_add_test (<executableTarget>
                        TEST_NAME <name>
-                       REPORT_DIR <dir>)
+                      [REPORT_DIR <dir>]
+                      [ARGS <args...>])
 
 Creates a test to execute ``<executableTarget>`` under the Mull runner. Calling this function
 also links ``<executableTarget>`` to ``mull::flags``, to compile it using the Mull compiler plugin.
@@ -114,9 +115,10 @@ Options:
  Name of the test to create.
 
 ``REPORT_DIR``
- Directory in which to output textual reports from Mull.
+ Directory in which to output textual reports from Mull. If not specified, defaults to ``<CMAKE_CURRENT_BINARY_DIR>/logs/mull``.
 
-TODO: passing additional arguments to executable?
+``ARGS``
+ Additional arguments to pass to the test executable.
 
 #]=======================================================================]
 function (mull_add_test executableTarget)
@@ -126,22 +128,41 @@ function (mull_add_test executableTarget)
             FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - target ${executableTarget} does not exist!")
     endif ()
 
+    set (oneVal TEST_NAME REPORT_DIR)
+
+    cmake_parse_arguments (LIMES "" "${oneVal}" "ARGS" ${ARGN})
+
+    if (NOT LIMES_TEST_NAME)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument TEST_NAME is required!")
+    endif ()
+
+    if (NOT LIMES_REPORT_DIR)
+        set (LIMES_REPORT_DIR "${CMAKE_CURRENT_BINARY_DIR}/logs/mull")
+    endif ()
+
+    if (LIMES_UNPARSED_ARGUMENTS)
+        message (
+            AUTHOR_WARNING
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+    endif ()
+
     if (NOT MULL_ENABLE)
         return ()
     endif ()
 
-    set (oneVal TEST_NAME REPORT_DIR)
-
-    cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
-
     target_link_libraries ("${executableTarget}" PRIVATE mull::flags)
 
-    add_test (NAME "${LIMES_TEST_NAME}"
-              COMMAND "${MULL_PROGRAM}" --report-dir "${LIMES_REPORT_DIR}"
-                      "$<TARGET_FILE:${executableTarget}>")
+    if (LIMES_ARGS)
+        list (PREPEND LIMES_ARGS --)
+    endif ()
 
-    set_property (TEST "${test_name}" APPEND PROPERTY ENVIRONMENT "MULL_CONFIG=${MULL_CONFIG_FILE}")
-    set_property (TEST "${test_name}" APPEND PROPERTY LABELS Mutation)
+    add_test (NAME "${LIMES_TEST_NAME}"
+              COMMAND "${MULL_PROGRAM}" "$<TARGET_FILE:${executableTarget}>" --report-dir
+                      "${LIMES_REPORT_DIR}" ${LIMES_ARGS})
+
+    set_property (TEST "${LIMES_TEST_NAME}" APPEND PROPERTY ENVIRONMENT
+                                                            "MULL_CONFIG=${MULL_CONFIG_FILE}")
+    set_property (TEST "${LIMES_TEST_NAME}" APPEND PROPERTY LABELS Mutation)
 
     message (VERBOSE "Configured mull mutation tests for target ${executableTarget}")
 

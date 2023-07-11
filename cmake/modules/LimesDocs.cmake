@@ -165,15 +165,18 @@ to ``ON`` for you).
 Options:
 
 ``SOURCE_DIR``
- Path to the source directory that the source code documented by ``docs-target`` is in.
+ Path to the source directory that the source code documented by ``docs-target`` is in. If not specified, defaults to
+ ``PROJECT_SOURCE_DIR``.
 
 ``DOCS_OUTPUT_DIR``
  Path to the documentation produced by Doxygen after building ``docs-target``. This function assumes that the generated
- XML output will be at ``<DOCS_OUTPUT_DIR>/xml``.
+ XML output will be at ``<DOCS_OUTPUT_DIR>/xml``. If not specified, the value of the ``DOXYGEN_OUTPUT_DIRECTORY`` variable
+ will be used. If the ``DOCS_OUTPUT_DIR`` argument is not specified and the ``DOXYGEN_OUTPUT_DIRECTORY`` variable is not
+ set, an error will be raised.
 
 ``OUT_FILE``
  This function will print the coverage information to stdout and also produce a plaintext file at the path specified by
- ``OUT_FILE``.
+ ``OUT_FILE``. If this argument isn't specified, no files will be produced.
 
 #]=======================================================================]
 function (limes_add_docs_coverage docsTarget)
@@ -183,20 +186,33 @@ function (limes_add_docs_coverage docsTarget)
             FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - docs target ${docsTarget} does not exist!")
     endif ()
 
-    if (NOT (PYTHON_PROGRAM AND COVERXYGEN_INSTALLED))
-        return ()
-    endif ()
-
     set (oneVal OUT_FILE SOURCE_DIR DOCS_OUTPUT_DIR)
 
     cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
 
     if (NOT LIMES_DOCS_OUTPUT_DIR)
+        if (NOT DOXYGEN_OUTPUT_DIRECTORY)
+            message (
+                FATAL_ERROR
+                    "${CMAKE_CURRENT_FUNCTION} - argument DOCS_OUTPUT_DIR not specified and the DOXYGEN_OUTPUT_DIRECTORY variable is not set!"
+                )
+        endif ()
+
         set (LIMES_DOCS_OUTPUT_DIR "${DOXYGEN_OUTPUT_DIRECTORY}")
     endif ()
 
     if (NOT LIMES_SOURCE_DIR)
         set (LIMES_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
+    endif ()
+
+    if (LIMES_UNPARSED_ARGUMENTS)
+        message (
+            AUTHOR_WARNING
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+    endif ()
+
+    if (NOT (PYTHON_PROGRAM AND COVERXYGEN_INSTALLED))
+        return ()
     endif ()
 
     set (xml_dir "${LIMES_DOCS_OUTPUT_DIR}/xml")

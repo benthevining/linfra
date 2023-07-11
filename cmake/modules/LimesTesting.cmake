@@ -148,9 +148,35 @@ TODO: a CATCH_FLAGS option/variable?
 #]=======================================================================]
 function (limes_configure_test_target target)
 
+    if (NOT TARGET "${target}")
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - target ${target} does not exist!")
+    endif ()
+
     set (oneVal BUNDLE_ID VERSION_MAJOR FULL_VERSION TEST_PREFIX)
 
     cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
+
+    if (NOT LIMES_BUNDLE_ID)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument BUNDLE_ID is required!")
+    endif ()
+
+    if (NOT LIMES_VERSION_MAJOR AND NOT LIMES_VERSION_MAJOR EQUAL 0)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument VERSION_MAJOR is required!")
+    endif ()
+
+    if (NOT LIMES_FULL_VERSION)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument FULL_VERSION is required!")
+    endif ()
+
+    if (NOT LIMES_TEST_PREFIX)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument TEST_PREFIX is required!")
+    endif ()
+
+    if (LIMES_UNPARSED_ARGUMENTS)
+        message (
+            AUTHOR_WARNING
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+    endif ()
 
     limes_configure_app_bundle (
         "${target}" BUNDLE_ID "${LIMES_BUNDLE_ID}" VERSION_MAJOR "${LIMES_VERSION_MAJOR}"
@@ -179,11 +205,11 @@ endfunction ()
     ::
 
         limes_configure_benchmark_target (<executableTarget>
-                                          BENCH_TARGET <targetName>
-                                          LIB_NAME <library>
                                           BUNDLE_ID <id>
                                           VERSION_MAJOR <majorVersion>
-                                          FULL_VERSION <fullVersion>)
+                                          FULL_VERSION <fullVersion>
+                                         [BENCH_TARGET <targetName>]
+                                         [LIB_NAME <library>])
 
 This function creates a custom target to drive running benchmarks in the specified ``<executableTarget>``.
 
@@ -194,11 +220,12 @@ This function is intended for use with executable targets whose source files con
 Options:
 
 ``BENCH_TARGET``
- Name of the custom target to create that will drive running the benchmarks
+ Name of the custom target to create that will drive running the benchmarks. If not specified, defaults to
+ ``<executableTarget>_benchmarks``.
 
 ``LIB_NAME``
  Name of the library or product being tested by these benchmarks. Only used to create the custom target's
- ``COMMENT``.
+ ``COMMENT``. If not specified, defaults to ``<executableTarget>``.
 
 ``BUNDLE_ID``
  Bundle ID to use for the ``.app`` bundle on iOS.
@@ -214,9 +241,39 @@ TODO: custom Catch2 JSON reporter?
 #]=======================================================================]
 function (limes_configure_benchmark_target target)
 
+    if (NOT TARGET "${target}")
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - target ${target} does not exist!")
+    endif ()
+
     set (oneVal BENCH_TARGET LIB_NAME BUNDLE_ID)
 
     cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
+
+    if (NOT LIMES_LIB_NAME)
+        set (LIMES_LIB_NAME "${target}")
+    endif ()
+
+    if (NOT LIMES_BENCH_TARGET)
+        set (LIMES_BENCH_TARGET "${target}_benchmarks")
+    endif ()
+
+    if (NOT LIMES_BUNDLE_ID)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument BUNDLE_ID is required!")
+    endif ()
+
+    if (NOT LIMES_VERSION_MAJOR AND NOT LIMES_VERSION_MAJOR EQUAL 0)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument VERSION_MAJOR is required!")
+    endif ()
+
+    if (NOT LIMES_FULL_VERSION)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument FULL_VERSION is required!")
+    endif ()
+
+    if (LIMES_UNPARSED_ARGUMENTS)
+        message (
+            AUTHOR_WARNING
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+    endif ()
 
     target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 

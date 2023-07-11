@@ -147,6 +147,24 @@ function (limes_configure_app_bundle target)
 
     cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
 
+    if (NOT LIMES_BUNDLE_ID)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument BUNDLE_ID is required!")
+    endif ()
+
+    if (NOT LIMES_VERSION_MAJOR AND NOT LIMES_VERSION_MAJOR EQUAL 0)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument VERSION_MAJOR is required!")
+    endif ()
+
+    if (NOT LIMES_FULL_VERSION)
+        message (FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - argument FULL_VERSION is required!")
+    endif ()
+
+    if (LIMES_UNPARSED_ARGUMENTS)
+        message (
+            AUTHOR_WARNING
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+    endif ()
+
     # TODO: on WatchOS: WatchKit app being installed is missing either the WKWatchKitApp or
     # WKApplication key set to true in its Info.plist
     set_target_properties (

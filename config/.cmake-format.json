@@ -112,6 +112,7 @@
       },
       "mull_add_test": {
         "kwargs": {
+          "ARGS": "+",
           "REPORT_DIR": 1,
           "TEST_NAME": 1
         },
