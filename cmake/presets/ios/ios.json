@@ -43,7 +43,7 @@
       "cacheVariables": {
         "CMAKE_CROSSCOMPILING_EMULATOR": {
           "type": "STRING",
-          "value": "${fileDir}/../test-ios.sh;$env{IOS_SIMULATOR_DEVICE_ID}"
+          "value": "${fileDir}/../../test-ios.sh;$env{IOS_SIMULATOR_DEVICE_ID}"
         },
         "CMAKE_XCODE_EFFECTIVE_PLATFORMS": {
           "type": "STRING",

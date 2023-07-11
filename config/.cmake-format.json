@@ -90,7 +90,10 @@
       "limes_configure_benchmark_target": {
         "kwargs": {
           "BENCH_TARGET": 1,
-          "LIB_NAME": 1
+          "BUNDLE_ID": 1,
+          "FULL_VERSION": 1,
+          "LIB_NAME": 1,
+          "VERSION_MAJOR": 1
         },
         "pargs": {
           "nargs": 1

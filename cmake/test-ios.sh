@@ -69,8 +69,9 @@ shift 2
 APP_BUNDLE_ID=$(mdls -name kMDItemCFBundleIdentifier -r "$APP_PATH")
 readonly APP_BUNDLE_ID
 
-if [ -z "$APP_BUNDLE_ID" ]; then
+if [ -z "$APP_BUNDLE_ID" ] || [ "$APP_BUNDLE_ID" == "(null)" ]; then
 	echo Unable to retrieve app bundle ID!
+	echo App bundle path: "$APP_PATH"
 	exit 1
 fi
 

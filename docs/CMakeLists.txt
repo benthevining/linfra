@@ -26,7 +26,7 @@ set (configured_conf "${CMAKE_CURRENT_BINARY_DIR}/conf.py")
 # input vars: CMAKE_CURRENT_LIST_DIR
 configure_file (conf.py "${configured_conf}" @ONLY NEWLINE_STYLE UNIX)
 
-set (LINFRA_DOCS_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doc"
+set (LINFRA_DOCS_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/doc"
      CACHE PATH "Directory where Linfra documentation will be produced")
 
 set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/linfra_docs.stamp")

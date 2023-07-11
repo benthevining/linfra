@@ -6,13 +6,14 @@ Using linfra
 
 The critical functionality linfra provides consists of:
 
-* CMake presets, which depend on
-* :ref:`Environment variables <env-vars>` (configured using ``direnv``)
+* CMake presets
+* :ref:`Environment variables <env-vars>` (configured using ``direnv`` on Unix and batch scripts on Windows)
 * :ref:`CMake utility code <cmake-modules>` (mostly to make tests work on all target platforms)
 
 Several of the scripts and files enabling this functionality are required to be at a known path on the filesystem, and cannot easily be
-fetched by something like ``CPM.cmake`` or ``FetchContent`` (specifically, the CMake preset json files and the crosscompiling emulator wrapper
-scripts) -- therefore, I recommend making linfra a git submodule of your consuming project. This is how the Limes libraries consume linfra.
+fetched by something like ``CPM.cmake`` or ``FetchContent`` (specifically, the CMake preset json files, the environment variable configuration
+scripts, and the crosscompiling emulator wrapper scripts) -- therefore, I recommend making linfra a git submodule of your consuming project.
+This is how the Limes libraries consume linfra.
 
 Assuming linfra is a git submodule at the path ``linfra/``, you can enable linfra's functionality with the following files:
 

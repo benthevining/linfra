@@ -4,7 +4,7 @@ A collection of infrastructure code that provides dev-environment setup for cros
 
 This repository contains:
 * CMake presets
-* Environment variable configuration scripts (`.envrc` file for `direnv`)
+* Environment variable configuration scripts (`.envrc` file for `direnv` on Unix, and batch scripts for Windows)
 * CMake utility code
 * Utility scripts
 

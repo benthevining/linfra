@@ -19,9 +19,38 @@ LimesTesting
 
 This module provides some functions for configuring test and benchmark targets.
 
+Cache variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. cmake:variable:: LIMES_CATCH_FLAGS
+
+Space-separated command line arguments to be passed to Catch test runners. Used by the limes_configure_test_target() function.
+
+.. cmake:variable:: LIMES_CATCH_FLAGS_BENCH
+
+Space-separated command line arguments to be passed to Catch test runners when running benchmarks. Used by the limes_configure_benchmark_target() function.
+
 #]=======================================================================]
 
 include_guard (GLOBAL)
+
+set (
+    LIMES_CATCH_FLAGS
+    "--warn NoAssertions --order rand --verbosity high"
+    CACHE
+        STRING
+        "Space-separated command line arguments to be passed to Catch test runners. Used by the limes_configure_test_target() function."
+    )
+
+set (
+    LIMES_CATCH_FLAGS_BENCH
+    "--order rand --verbosity high"
+    CACHE
+        STRING
+        "Space-separated command line arguments to be passed to Catch test runners when running benchmarks. Used by the limes_configure_benchmark_target() function."
+    )
+
+mark_as_advanced (LIMES_CATCH_FLAGS LIMES_CATCH_FLAGS_BENCH)
 
 #[=======================================================================[.rst:
 
@@ -129,13 +158,12 @@ function (limes_configure_test_target target)
 
     target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 
+    separate_arguments (args UNIX_COMMAND "${LIMES_CATCH_FLAGS}")
+
     # cmake-format: off
 	catch_discover_tests (
 		"${target}"
-		EXTRA_ARGS
-			--warn NoAssertions
-			--order rand
-			--verbosity high
+		EXTRA_ARGS ${args}
 		TEST_PREFIX "${LIMES_TEST_PREFIX}"
 		PROPERTIES
 			SKIP_REGULAR_EXPRESSION "SKIPPED:"
@@ -152,7 +180,10 @@ endfunction ()
 
         limes_configure_benchmark_target (<executableTarget>
                                           BENCH_TARGET <targetName>
-                                          LIB_NAME <library>)
+                                          LIB_NAME <library>
+                                          BUNDLE_ID <id>
+                                          VERSION_MAJOR <majorVersion>
+                                          FULL_VERSION <fullVersion>)
 
 This function creates a custom target to drive running benchmarks in the specified ``<executableTarget>``.
 
@@ -169,22 +200,34 @@ Options:
  Name of the library or product being tested by these benchmarks. Only used to create the custom target's
  ``COMMENT``.
 
-TODO: Need to call limes_configure_app_bundle() here?
+``BUNDLE_ID``
+ Bundle ID to use for the ``.app`` bundle on iOS.
+
+``VERSION_MAJOR``
+ Major version of the test application.
+
+``FULL_VERSION``
+ Full version string for the test application.
+
 TODO: custom Catch2 JSON reporter?
 
 #]=======================================================================]
 function (limes_configure_benchmark_target target)
 
-    set (oneVal BENCH_TARGET LIB_NAME)
+    set (oneVal BENCH_TARGET LIB_NAME BUNDLE_ID)
 
     cmake_parse_arguments (LIMES "" "${oneVal}" "" ${ARGN})
 
     target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 
-    limes_copy_dlls ("${target}")
+    limes_configure_app_bundle (
+        "${target}" BUNDLE_ID "${LIMES_BUNDLE_ID}" VERSION_MAJOR "${LIMES_VERSION_MAJOR}"
+        FULL_VERSION "${LIMES_FULL_VERSION}")
+
+    separate_arguments (args UNIX_COMMAND "${LIMES_CATCH_FLAGS_BENCH}")
 
     add_custom_target (
-        "${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" --order rand --verbosity high
+        "${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" ${args}
         COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL)
 
 endfunction ()

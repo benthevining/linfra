@@ -29,7 +29,7 @@ Environment variables
 ################################
 
 The IDs of the simulator devices to use for each platform can be specified using the :envvar:`IOS_SIMULATOR_DEVICE_ID`,
-:envvar:`TVOS_SIMULATOR_DEVICE_ID`, and :envvar:`WATCHOS_SIMULATOR_DEVICE_ID` environment variables.
+:envvar:`TVOS_SIMULATOR_DEVICE_ID`, and :envvar:`WATCHOS_SIMULATOR_DEVICE_ID` environment variables. All of these are initialized to default values by direnv.
 
 CMake internals
 ################################
@@ -58,3 +58,30 @@ devices are running (and could be booted correctly).
 
 Leaving simulator devices running when you're no longer using them can waste your system's resources. The ``shutdown-ios-simulators.sh`` script will shut down and
 erase all three simulators you've used for testing.
+
+Detecting iOS target platforms
+################################
+
+In your CMake code, you can check the boolean variable ``IOS`` to see if the target platform is any iOS variant. This will be ``ON`` for iOS, tvOS, and watchOS, for
+either the device or simulator SDKs. You can check the variable ``CMAKE_SYSTEM_NAME`` to get the exact target platform (it will be one of ``iOS``, ``tvOS``, or ``watchOS``).
+
+In your C++ code, I suggest using Apple's provided ``TargetConditionals.h`` file to set preprocessor symbols indicating the target platform.
+The pattern usually looks something like this:
+
+.. code-block:: c++
+
+	#ifdef __APPLE__
+
+	#include <TargetConditionals.h>
+
+	#if ! TARGET_OS_IPHONE
+		// target is desktop MacOS
+	#elif TARGET_OS_WATCH
+		// target is WatchOS
+	#elif TARGET_OS_TV
+		// target is tvOS
+	#else
+		// target is iOS
+	#endif
+
+	#endif // __APPLE__

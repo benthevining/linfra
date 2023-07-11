@@ -67,9 +67,22 @@ macro (limes_default_doxygen_settings)
         return ()
     endif ()
 
-    set (DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../doc")
-    set (DOXYGEN_WARN_LOGFILE "${CMAKE_CURRENT_LIST_DIR}/../logs/doxygen.log")
-    set (DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_CURRENT_LIST_DIR}/../README.md")
+    if (NOT DOXYGEN_OUTPUT_DIRECTORY)
+        set (DOXYGEN_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/doc")
+    endif ()
+
+    if (NOT DOXYGEN_WARN_LOGFILE)
+        set (DOXYGEN_WARN_LOGFILE "${PROJECT_SOURCE_DIR}/logs/doxygen.log")
+    endif ()
+
+    if (NOT DOXYGEN_USE_MDFILE_AS_MAINPAGE)
+        set (DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
+
+        if (NOT EXISTS "${DOXYGEN_USE_MDFILE_AS_MAINPAGE}")
+            unset (DOXYGEN_USE_MDFILE_AS_MAINPAGE)
+        endif ()
+    endif ()
+
     set (DOXYGEN_ALWAYS_DETAILED_SEC YES)
     set (DOXYGEN_FULL_PATH_NAMES NO)
     set (DOXYGEN_JAVADOC_AUTOBRIEF YES)
@@ -182,39 +195,35 @@ function (limes_add_docs_coverage docsTarget)
         set (LIMES_DOCS_OUTPUT_DIR "${DOXYGEN_OUTPUT_DIRECTORY}")
     endif ()
 
-    if (NOT LIMES_OUT_FILE)
-        set (LIMES_OUT_FILE "${LIMES_DOCS_OUTPUT_DIR}/coverage.txt")
-    endif ()
-
     if (NOT LIMES_SOURCE_DIR)
-        set (LIMES_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../src")
+        set (LIMES_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
     endif ()
 
     set (xml_dir "${LIMES_DOCS_OUTPUT_DIR}/xml")
 
-    # TODO: separate these, only add the file one if requested with OUT_FILE
     # cmake-format: off
-	add_custom_command (
-		TARGET "${docsTarget}" POST_BUILD
-		BYPRODUCTS "${LIMES_OUT_FILE}"
-		# write a plaintext file
-		COMMAND
-			"${PYTHON_PROGRAM}" -m coverxygen
-				--xml-dir "${xml_dir}"
-				--src-dir "${LIMES_SOURCE_DIR}"
-				--format summary
-				--prefix "${LIMES_SOURCE_DIR}"
-				--output "${LIMES_OUT_FILE}"
-		# write to stdout
-		COMMAND
-			"${PYTHON_PROGRAM}" -m coverxygen
-				--xml-dir "${xml_dir}"
-				--src-dir "${LIMES_SOURCE_DIR}"
-				--format summary
-				--prefix "${LIMES_SOURCE_DIR}"
-				--output -
-		COMMENT "Running docs coverage report for target ${docsTarget}..."
-		VERBATIM USES_TERMINAL)
-	# cmake-format: on
+    set (command
+        "${PYTHON_PROGRAM}"
+            -m coverxygen
+            --xml-dir "${xml_dir}"
+            --src-dir "${LIMES_SOURCE_DIR}"
+            --format summary
+            --prefix "${LIMES_SOURCE_DIR}")
+    # cmake-format: on
+
+    # write to stdout
+    add_custom_command (TARGET "${docsTarget}" POST_BUILD COMMAND ${command} --output -
+                        VERBATIM USES_TERMINAL)
+
+    if (LIMES_OUT_FILE)
+        # write a plaintext file
+        add_custom_command (
+            TARGET "${docsTarget}"
+            POST_BUILD
+            BYPRODUCTS "${LIMES_OUT_FILE}"
+            COMMAND ${command} --output "${LIMES_OUT_FILE}"
+            COMMENT "Running docs coverage report for target ${docsTarget}..."
+            VERBATIM USES_TERMINAL)
+    endif ()
 
 endfunction ()
