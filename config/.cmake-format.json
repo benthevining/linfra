@@ -7,8 +7,8 @@
   "format": {
     "autosort": true,
     "command_case": "canonical",
-    "dangle_align": "prefix-indent",
-    "dangle_parens": false,
+    "dangle_align": "prefix",
+    "dangle_parens": true,
     "disable": false,
     "enable_sort": true,
     "fractional_tab_policy": "use-space",

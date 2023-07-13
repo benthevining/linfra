@@ -16,12 +16,12 @@
 # these attributes define files that should use spaces for indentation
 [attr]space_indent   whitespace=blank-at-eol,tab-in-indent
 [attr]2_space_indent whitespace=blank-at-eol,tab-in-indent,tabwidth=2
+[attr]4_space_indent whitespace=blank-at-eol,tab-in-indent,tabwidth=4
 
 # In general, exporting a source archive should leave no trace that
 # Limes was ever a git repository. So we don't want to export any
 # git-related configuration files
 .git*             export-ignore
-.mailmap          export-ignore
 .github/          export-ignore
 
 # For conformance with .editorconfig
@@ -32,6 +32,9 @@ CITATION.cff      2_space_indent
 *.json            2_space_indent
 *.py              2_space_indent
 *.clang-*         2_space_indent
+*.py              4_space_indent
+*.cmake           4_space_indent
+CMakeLists.txt    4_space_indent
 
 .ecrc             text
 .gitconfig        text

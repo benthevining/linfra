@@ -33,20 +33,20 @@ import subprocess
 sdk_root = environ.get ('ANDROID_SDK_ROOT')
 
 if sdk_root is None:
-  print ('The environment variable ANDROID_SDK_ROOT must be set!')
-  sys.exit (1)
+    print ('The environment variable ANDROID_SDK_ROOT must be set!')
+    sys.exit (1)
 
 sdk_root = Path (sdk_root)
 
 avdmanager = sdk_root / 'tools' / 'bin' / 'avdmanager'
 
 run_result = subprocess.run ([avdmanager, 'list', 'avd', '--compact'],
-               stdout=subprocess.PIPE)
+                stdout=subprocess.PIPE, check=True)
 
 device_list = run_result.stdout.decode().split()
 
 if device_list is None or len(device_list) == 0:
-  print('No Android AVDs were found!')
-  sys.exit(1)
+    print('No Android AVDs were found!')
+    sys.exit(1)
 
 print (device_list[0])

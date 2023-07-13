@@ -124,7 +124,8 @@ if (PYTHON_PROGRAM)
     if (NOT DEFINED CACHE{COVERXYGEN_INSTALLED})
         execute_process (
             COMMAND "${PYTHON_PROGRAM}" -c "import coverxygen" RESULT_VARIABLE coverxygen_found
-            OUTPUT_VARIABLE output ERROR_VARIABLE error)
+            OUTPUT_VARIABLE output ERROR_VARIABLE error
+        )
 
         if (coverxygen_found EQUAL 0)
             set (found_value ON)
@@ -133,7 +134,8 @@ if (PYTHON_PROGRAM)
         endif ()
 
         set (COVERXYGEN_INSTALLED "${found_value}"
-             CACHE INTERNAL "Whether the coverxygen Python module was found")
+             CACHE INTERNAL "Whether the coverxygen Python module was found"
+        )
 
         message (CONFIGURE_LOG "coverxygen found: ${COVERXYGEN_INSTALLED}")
     endif ()
@@ -183,7 +185,8 @@ function (limes_add_docs_coverage docsTarget)
 
     if (NOT TARGET "${docsTarget}")
         message (
-            FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - docs target ${docsTarget} does not exist!")
+            FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - docs target ${docsTarget} does not exist!"
+        )
     endif ()
 
     set (oneVal OUT_FILE SOURCE_DIR DOCS_OUTPUT_DIR)
@@ -195,7 +198,7 @@ function (limes_add_docs_coverage docsTarget)
             message (
                 FATAL_ERROR
                     "${CMAKE_CURRENT_FUNCTION} - argument DOCS_OUTPUT_DIR not specified and the DOXYGEN_OUTPUT_DIRECTORY variable is not set!"
-                )
+            )
         endif ()
 
         set (LIMES_DOCS_OUTPUT_DIR "${DOXYGEN_OUTPUT_DIRECTORY}")
@@ -208,7 +211,8 @@ function (limes_add_docs_coverage docsTarget)
     if (LIMES_UNPARSED_ARGUMENTS)
         message (
             AUTHOR_WARNING
-                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}"
+        )
     endif ()
 
     if (NOT (PYTHON_PROGRAM AND COVERXYGEN_INSTALLED))
@@ -224,12 +228,14 @@ function (limes_add_docs_coverage docsTarget)
             --xml-dir "${xml_dir}"
             --src-dir "${LIMES_SOURCE_DIR}"
             --format summary
-            --prefix "${LIMES_SOURCE_DIR}")
+            --prefix "${LIMES_SOURCE_DIR}"
+    )
     # cmake-format: on
 
     # write to stdout
-    add_custom_command (TARGET "${docsTarget}" POST_BUILD COMMAND ${command} --output -
-                        VERBATIM USES_TERMINAL)
+    add_custom_command (
+        TARGET "${docsTarget}" POST_BUILD COMMAND ${command} --output - VERBATIM USES_TERMINAL
+    )
 
     if (LIMES_OUT_FILE)
         # write a plaintext file
@@ -239,7 +245,8 @@ function (limes_add_docs_coverage docsTarget)
             BYPRODUCTS "${LIMES_OUT_FILE}"
             COMMAND ${command} --output "${LIMES_OUT_FILE}"
             COMMENT "Running docs coverage report for target ${docsTarget}..."
-            VERBATIM USES_TERMINAL)
+            VERBATIM USES_TERMINAL
+        )
     endif ()
 
 endfunction ()

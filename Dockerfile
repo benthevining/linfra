@@ -1,3 +1,10 @@
+# plugins from .tool-versions (ccache cmake direnv emsdk git ninja pre-commit python)
+# pip requirements.txt (sphinx coverxygen)
+# clang doxygen gcc graphviz mull
+# run pre-commit install
+# hook asdf into shell
+# run direnv allow
+
 FROM menny/android_ndk:latest AS limes-dev
 
 SHELL [ "/bin/bash", "-c" ]
@@ -22,5 +29,7 @@ RUN direnv allow
 
 # Android NDK
 # create Android AVD device
+
+# if Mac image, install iOS simulator SDKs and create devices
 
 ENTRYPOINT [ "/bin/bash", "-c" ]

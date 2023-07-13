@@ -40,7 +40,7 @@ set (
     CACHE
         STRING
         "Space-separated command line arguments to be passed to Catch test runners. Used by the limes_configure_test_target() function."
-    )
+)
 
 set (
     LIMES_CATCH_FLAGS_BENCH
@@ -48,7 +48,7 @@ set (
     CACHE
         STRING
         "Space-separated command line arguments to be passed to Catch test runners when running benchmarks. Used by the limes_configure_benchmark_target() function."
-    )
+)
 
 mark_as_advanced (LIMES_CATCH_FLAGS LIMES_CATCH_FLAGS_BENCH)
 
@@ -86,7 +86,8 @@ macro (limes_get_catch2)
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG origin/devel
         GIT_SHALLOW ON
-        GIT_PROGRESS ON)
+        GIT_PROGRESS ON
+    )
 
     FetchContent_MakeAvailable (Catch2)
 
@@ -175,26 +176,29 @@ function (limes_configure_test_target target)
     if (LIMES_UNPARSED_ARGUMENTS)
         message (
             AUTHOR_WARNING
-                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}"
+        )
     endif ()
 
     limes_configure_app_bundle (
         "${target}" BUNDLE_ID "${LIMES_BUNDLE_ID}" VERSION_MAJOR "${LIMES_VERSION_MAJOR}"
-        FULL_VERSION "${LIMES_FULL_VERSION}")
+        FULL_VERSION "${LIMES_FULL_VERSION}"
+    )
 
     target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 
     separate_arguments (args UNIX_COMMAND "${LIMES_CATCH_FLAGS}")
 
     # cmake-format: off
-	catch_discover_tests (
-		"${target}"
-		EXTRA_ARGS ${args}
-		TEST_PREFIX "${LIMES_TEST_PREFIX}"
-		PROPERTIES
-			SKIP_REGULAR_EXPRESSION "SKIPPED:"
-			FAIL_REGULAR_EXPRESSION "FAILED:")
-	# cmake-format: on
+    catch_discover_tests (
+        "${target}"
+        EXTRA_ARGS ${args}
+        TEST_PREFIX "${LIMES_TEST_PREFIX}"
+        PROPERTIES
+            SKIP_REGULAR_EXPRESSION "SKIPPED:"
+            FAIL_REGULAR_EXPRESSION "FAILED:"
+    )
+    # cmake-format: on
 
 endfunction ()
 
@@ -272,18 +276,22 @@ function (limes_configure_benchmark_target target)
     if (LIMES_UNPARSED_ARGUMENTS)
         message (
             AUTHOR_WARNING
-                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}"
+        )
     endif ()
 
     target_link_libraries ("${target}" PRIVATE Catch2::Catch2WithMain)
 
     limes_configure_app_bundle (
         "${target}" BUNDLE_ID "${LIMES_BUNDLE_ID}" VERSION_MAJOR "${LIMES_VERSION_MAJOR}"
-        FULL_VERSION "${LIMES_FULL_VERSION}")
+        FULL_VERSION "${LIMES_FULL_VERSION}"
+    )
 
     separate_arguments (args UNIX_COMMAND "${LIMES_CATCH_FLAGS_BENCH}")
 
-    add_custom_target ("${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" ${args}
-                       COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL)
+    add_custom_target (
+        "${LIMES_BENCH_TARGET}" COMMAND "${target}" "[!benchmark]" ${args}
+        COMMENT "Running ${LIMES_LIB_NAME} benchmarks..." USES_TERMINAL
+    )
 
 endfunction ()

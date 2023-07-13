@@ -23,15 +23,15 @@ Assuming linfra is a git submodule at the path ``linfra/``, you can enable linfr
 	.. code:: json
 
 		{
-		  "cmakeMinimumRequired": {
-		    "major": 3,
-		    "minor": 25,
-		    "patch": 0
-		  },
-		  "include": [
-		    "linfra/CMakePresets.json"
-		  ],
-		  "version": 6
+			"cmakeMinimumRequired": {
+				"major": 3,
+				"minor": 25,
+				"patch": 0
+			},
+			"include": [
+				"linfra/CMakePresets.json"
+			],
+			"version": 6
 		}
 
 You can simply include linfra's ``CMakePresets.json`` file, which imports all of linfra's provided CMake presets.

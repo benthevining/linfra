@@ -17,7 +17,8 @@ project (
     VERSION 0.0.1
     DESCRIPTION "CMake project utilities"
     HOMEPAGE_URL "https://github.com/benthevining/linfra"
-    LANGUAGES NONE)
+    LANGUAGES NONE
+)
 
 list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/modules")
 

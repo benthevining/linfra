@@ -54,8 +54,10 @@ macro (limes_default_project_options)
 
     set_property (DIRECTORY APPEND PROPERTY LABELS "${PROJECT_NAME}")
 
-    set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${CMAKE_CURRENT_LIST_DIR}/logs"
-                                            "${CMAKE_CURRENT_LIST_DIR}/deploy")
+    set_property (
+        DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${CMAKE_CURRENT_LIST_DIR}/logs"
+                                  "${CMAKE_CURRENT_LIST_DIR}/deploy"
+    )
 
     if (EMSCRIPTEN)
         add_compile_options (-sNO_DISABLE_EXCEPTION_CATCHING -fexceptions)
@@ -102,7 +104,8 @@ function (limes_copy_dlls target)
         add_custom_command (
             TARGET "${target}" POST_BUILD
             COMMAND "${CMAKE_COMMAND}" -E copy -t "$<TARGET_FILE_DIR:${target}>"
-                    "$<TARGET_RUNTIME_DLLS:${target}>" USES_TERMINAL COMMAND_EXPAND_LISTS)
+                    "$<TARGET_RUNTIME_DLLS:${target}>" USES_TERMINAL COMMAND_EXPAND_LISTS
+        )
     endif ()
 endfunction ()
 
@@ -162,7 +165,8 @@ function (limes_configure_app_bundle target)
     if (LIMES_UNPARSED_ARGUMENTS)
         message (
             AUTHOR_WARNING
-                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}"
+        )
     endif ()
 
     # TODO: on WatchOS: WatchKit app being installed is missing either the WKWatchKitApp or
@@ -177,7 +181,8 @@ function (limes_configure_app_bundle target)
                    MACOSX_BUNDLE_GUI_IDENTIFIER "${LIMES_BUNDLE_ID}"
                    MACOSX_BUNDLE_BUNDLE_VERSION "${LIMES_FULL_VERSION}"
                    MACOSX_BUNDLE_LONG_VERSION_STRING "${LIMES_FULL_VERSION}"
-                   MACOSX_BUNDLE_SHORT_VERSION_STRING "${LIMES_VERSION_MAJOR}")
+                   MACOSX_BUNDLE_SHORT_VERSION_STRING "${LIMES_VERSION_MAJOR}"
+    )
 
     limes_copy_dlls ("${target}")
 

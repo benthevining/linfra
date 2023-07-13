@@ -54,10 +54,12 @@ include_guard (GLOBAL)
 include (CMakeDependentOption)
 
 set (mull_description
-     "Enable mutation testing with mull. This is only supported on MacOS with Clang.")
+     "Enable mutation testing with mull. This is only supported on MacOS with Clang."
+)
 
-cmake_dependent_option (MULL_ENABLE "${mull_description}" OFF
-                        "APPLE;CMAKE_CXX_COMPILER_ID MATCHES \".*Clang\"" OFF)
+cmake_dependent_option (
+    MULL_ENABLE "${mull_description}" OFF "APPLE;CMAKE_CXX_COMPILER_ID MATCHES \".*Clang\"" OFF
+)
 
 if (MULL_ENABLE)
     __mull_internal_parse_clang_version ()
@@ -70,8 +72,10 @@ if (MULL_ENABLE)
             add_library (mull_flags INTERFACE)
             add_library (mull::flags ALIAS mull_flags)
 
-            target_compile_options (mull_flags INTERFACE -fexperimental-new-pass-manager
-                                                         "-fpass-plugin=${MULL_PLUGIN}" -g)
+            target_compile_options (
+                mull_flags INTERFACE -fexperimental-new-pass-manager "-fpass-plugin=${MULL_PLUGIN}"
+                                     -g
+            )
 
             if ("${MULL_CLANG_VERSION}" EQUAL 11)
                 target_compile_options (mull_flags INTERFACE -O1)
@@ -125,7 +129,8 @@ function (mull_add_test executableTarget)
 
     if (NOT TARGET "${executableTarget}")
         message (
-            FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - target ${executableTarget} does not exist!")
+            FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} - target ${executableTarget} does not exist!"
+        )
     endif ()
 
     set (oneVal TEST_NAME REPORT_DIR)
@@ -143,7 +148,8 @@ function (mull_add_test executableTarget)
     if (LIMES_UNPARSED_ARGUMENTS)
         message (
             AUTHOR_WARNING
-                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}")
+                "${CMAKE_CURRENT_FUNCTION} - unparsed arguments: ${LIMES_UNPARSED_ARGUMENTS}"
+        )
     endif ()
 
     if (NOT MULL_ENABLE)
@@ -158,10 +164,12 @@ function (mull_add_test executableTarget)
 
     add_test (NAME "${LIMES_TEST_NAME}"
               COMMAND "${MULL_PROGRAM}" "$<TARGET_FILE:${executableTarget}>" --report-dir
-                      "${LIMES_REPORT_DIR}" ${LIMES_ARGS})
+                      "${LIMES_REPORT_DIR}" ${LIMES_ARGS}
+    )
 
-    set_property (TEST "${LIMES_TEST_NAME}" APPEND PROPERTY ENVIRONMENT
-                                                            "MULL_CONFIG=${MULL_CONFIG_FILE}")
+    set_property (
+        TEST "${LIMES_TEST_NAME}" APPEND PROPERTY ENVIRONMENT "MULL_CONFIG=${MULL_CONFIG_FILE}"
+    )
     set_property (TEST "${LIMES_TEST_NAME}" APPEND PROPERTY LABELS Mutation)
 
     message (VERBOSE "Configured mull mutation tests for target ${executableTarget}")
@@ -181,7 +189,7 @@ function (__mull_internal_parse_clang_version)
         message (
             WARNING
                 "CMAKE_CXX_COMPILER_VERSION is not defined. To configure mull mutation testing, define either CMAKE_CXX_COMPILER_VERSION or MULL_CLANG_VERSION."
-            )
+        )
         return ()
     endif ()
 
@@ -194,7 +202,7 @@ function (__mull_internal_parse_clang_version)
             message (
                 WARNING
                     "CMAKE_CXX_COMPILER_VERSION appears to be in an unknown format: '${CMAKE_CXX_COMPILER_VERSION}'. Please explicitly define MULL_CLANG_VERSION to the major version of Clang being used."
-                )
+            )
             unset (dot_idx)
             unset (version_string_length)
             return ()
@@ -210,7 +218,8 @@ function (__mull_internal_parse_clang_version)
     unset (dot_idx)
 
     set (MULL_CLANG_VERSION "${clang_version_init}" CACHE STRING
-                                                          "Major version of Clang being used")
+                                                          "Major version of Clang being used"
+    )
 
     mark_as_advanced (MULL_CLANG_VERSION)
 
@@ -233,7 +242,7 @@ function (__mull_internal_validate_clang_version)
         message (
             WARNING
                 "mull only supports Clang versions 11, 12, 13, and 14. Incompatible Clang version detected: ${MULL_CLANG_VERSION}"
-            )
+        )
         set (MULL_ENABLE OFF PARENT_SCOPE)
     endif ()
 
@@ -251,8 +260,10 @@ function (__mull_internal_find_components)
     # compiler plugin
     set (mull_plugin_name "mull-ir-frontend-${MULL_CLANG_VERSION}")
 
-    find_file (MULL_PLUGIN NAMES "/usr/local/lib/${mull_plugin_name}" "~/lib/${mull_plugin_name}"
-               DOC "Path to the mull compiler plugin binary")
+    find_file (
+        MULL_PLUGIN NAMES "/usr/local/lib/${mull_plugin_name}" "~/lib/${mull_plugin_name}"
+        DOC "Path to the mull compiler plugin binary"
+    )
 
     mark_as_advanced (MULL_PROGRAM MULL_PLUGIN)
 

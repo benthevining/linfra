@@ -31,17 +31,17 @@ import json
 #
 
 if len(sys.argv) < 2:
-	print ('You must specify the platform as the first argument')
-	sys.exit(1)
+    print ('You must specify the platform as the first argument')
+    sys.exit(1)
 
 platform = sys.argv[1]
 
-if not platform in ['iOS', 'tvOS', 'watchOS']:
-	print (f'Invalid platform requested: \'{platform}\'')
-	sys.exit(1)
+if platform not in ['iOS', 'tvOS', 'watchOS']:
+    print (f'Invalid platform requested: \'{platform}\'')
+    sys.exit(1)
 
 run_result = subprocess.run (['xcrun', 'simctl', 'list', '--json'],
-							 stdout=subprocess.PIPE)
+                            stdout=subprocess.PIPE, check=True)
 
 top_dict = json.loads (run_result.stdout)
 
@@ -55,15 +55,15 @@ runtimes = top_dict['runtimes']
 chosen_runtime = None
 
 for runtime_obj in runtimes:
-	if not (runtime_obj['isAvailable'] and runtime_obj['platform'] == platform):
-		continue
+    if not (runtime_obj['isAvailable'] and runtime_obj['platform'] == platform):
+        continue
 
-	if chosen_runtime is None or runtime_obj['version'] > chosen_runtime['version']:
-		chosen_runtime = runtime_obj
+    if chosen_runtime is None or runtime_obj['version'] > chosen_runtime['version']: # pylint: disable=unsubscriptable-object
+        chosen_runtime = runtime_obj
 
 if chosen_runtime is None:
-	print ('No runtime found!')
-	sys.exit(1)
+    print ('No runtime found!')
+    sys.exit(1)
 
 runtime_id = chosen_runtime['identifier']
 
@@ -72,8 +72,8 @@ runtime_id = chosen_runtime['identifier']
 devices_dict = top_dict['devices']
 
 if not runtime_id in devices_dict:
-	print(f'Runtime ID \'{runtime_id}\' not found in devices dict!')
-	sys.exit(1)
+    print(f'Runtime ID \'{runtime_id}\' not found in devices dict!')
+    sys.exit(1)
 
 devices = devices_dict[runtime_id]
 
@@ -83,12 +83,12 @@ chosen_device = None
 devices.reverse()
 
 for device_obj in devices:
-	if device_obj['isAvailable']:
-		chosen_device = device_obj
-		break
+    if device_obj['isAvailable']:
+        chosen_device = device_obj
+        break
 
 if chosen_device is None:
-	print('No devices available!')
-	sys.exit(1)
+    print('No devices available!')
+    sys.exit(1)
 
 print(chosen_device['udid'])
