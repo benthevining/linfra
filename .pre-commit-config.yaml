@@ -82,7 +82,7 @@ repos:
 
 # Insert license header
 - repo: https://github.com/Lucas-C/pre-commit-hooks
-  rev: v1.5.3
+  rev: v1.5.4
   hooks:
   - id: insert-license
     name: Insert license header in CMake and shell files
@@ -198,7 +198,7 @@ repos:
 
   # validate JSON/YAML schemas
 - repo: https://github.com/sirosen/check-jsonschema
-  rev: 0.23.3
+  rev: 0.24.1
   hooks:
   - id: check-jsonschema
     name: Validate CMake presets
