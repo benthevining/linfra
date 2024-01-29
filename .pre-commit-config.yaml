@@ -166,14 +166,14 @@ repos:
 
   # text file linters
 - repo: https://github.com/sirosen/texthooks
-  rev: 0.6.3
+  rev: 0.6.4
   hooks:
   - id: fix-ligatures
   - id: fix-smartquotes
   - id: forbid-bidi-controls
   # Markdown
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.38.0
+  rev: v0.39.0
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD033, MD010, MD013]
