@@ -198,7 +198,7 @@ repos:
 
   # validate JSON/YAML schemas
 - repo: https://github.com/sirosen/check-jsonschema
-  rev: 0.28.2
+  rev: 0.28.3
   hooks:
   - id: check-jsonschema
     name: Validate CMake presets
