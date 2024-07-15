@@ -189,7 +189,7 @@ repos:
 
   # various other formatters
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks.git
-  rev: v2.13.0
+  rev: v2.14.0
   hooks:
   - id: pretty-format-ini
     args: [--autofix]
