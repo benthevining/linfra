@@ -179,7 +179,7 @@ repos:
     args: [--disable, MD033, MD010, MD013]
     # exclude: CHANGELOG.md
 - repo: https://github.com/codingjoe/relint
-  rev: 3.1.1
+  rev: 3.2.0
   hooks:
   - id: relint
     args: [-c, config/.relint.yml]
