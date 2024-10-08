@@ -40,7 +40,7 @@ default_language_version:
 
 default_install_hook_types: [pre-commit, pre-push, commit-msg]
 
-default_stages: [commit, push]
+default_stages: [Nonepre-commitNone, Nonepre-pushNone]
 
 fail_fast: false
 
@@ -128,7 +128,7 @@ repos:
 
 # General
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v5.0.0
   hooks:
   - id: check-added-large-files
     args: [--maxkb=64]
