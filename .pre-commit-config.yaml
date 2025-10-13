@@ -121,7 +121,7 @@ repos:
 
 # Python formatting & linting
 - repo: https://github.com/pylint-dev/pylint
-  rev: v3.3.9
+  rev: v4.0.0
   hooks:
   - id: pylint
     args: ["--disable=line-too-long,import-error,too-few-public-methods,invalid-name", "--ignore=conf.py,colors.py"]
@@ -198,7 +198,7 @@ repos:
 
   # validate JSON/YAML schemas
 - repo: https://github.com/sirosen/check-jsonschema
-  rev: 0.34.0
+  rev: 0.34.1
   hooks:
   - id: check-jsonschema
     name: Validate CMake presets
