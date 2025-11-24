@@ -109,7 +109,7 @@ repos:
 
 # Bash formatting & linting
 - repo: https://github.com/lovesegfault/beautysh
-  rev: v6.4.1
+  rev: v6.4.2
   hooks:
   - id: beautysh
     args: [--tab]
@@ -173,7 +173,7 @@ repos:
   - id: forbid-bidi-controls
   # Markdown
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.45.0
+  rev: v0.46.0
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD033, MD010, MD013]
@@ -221,7 +221,7 @@ repos:
 
 # check editorconfig rules
 - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-  rev: 3.4.1
+  rev: 3.5.0
   hooks:
   - id: editorconfig-checker
     args: [-config, config/.ecrc]
