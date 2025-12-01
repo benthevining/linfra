@@ -121,7 +121,7 @@ repos:
 
 # Python formatting & linting
 - repo: https://github.com/pylint-dev/pylint
-  rev: v4.0.3
+  rev: v4.0.4
   hooks:
   - id: pylint
     args: ["--disable=line-too-long,import-error,too-few-public-methods,invalid-name", "--ignore=conf.py,colors.py"]
@@ -221,7 +221,7 @@ repos:
 
 # check editorconfig rules
 - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-  rev: 3.5.0
+  rev: 3.6.0
   hooks:
   - id: editorconfig-checker
     args: [-config, config/.ecrc]
