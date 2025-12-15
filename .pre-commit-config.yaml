@@ -173,7 +173,7 @@ repos:
   - id: forbid-bidi-controls
   # Markdown
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.46.0
+  rev: v0.47.0
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD033, MD010, MD013]
@@ -198,7 +198,7 @@ repos:
 
   # validate JSON/YAML schemas
 - repo: https://github.com/sirosen/check-jsonschema
-  rev: 0.35.0
+  rev: 0.36.0
   hooks:
   - id: check-jsonschema
     name: Validate CMake presets
