@@ -121,7 +121,7 @@ repos:
 
 # Python formatting & linting
 - repo: https://github.com/pylint-dev/pylint
-  rev: v4.1.2
+  rev: v4.1.3
   hooks:
   - id: pylint
     args: ["--disable=line-too-long,import-error,too-few-public-methods,invalid-name", "--ignore=conf.py,colors.py"]
@@ -179,7 +179,7 @@ repos:
     args: [--disable, MD033, MD010, MD013]
     # exclude: CHANGELOG.md
 - repo: https://github.com/codingjoe/relint
-  rev: 3.5.0
+  rev: 3.6.1
   hooks:
   - id: relint
     args: [-c, config/.relint.yml]
